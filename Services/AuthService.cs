@@ -14,7 +14,7 @@ namespace Parking.Services
     public class AuthService
     {
         private readonly AppDbContext _context;
-        private IConfiguration _config;
+        private readonly IConfiguration _config;
 
         public AuthService(AppDbContext context, IConfiguration config)
         {

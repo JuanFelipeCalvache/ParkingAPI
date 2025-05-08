@@ -168,3 +168,4 @@ E:\workSpace\ParkingApi\Parking\obj\Debug\net8.0\Parking.pdb
 E:\workSpace\ParkingApi\Parking\obj\Debug\net8.0\Parking.genruntimeconfig.cache
 E:\workSpace\ParkingApi\Parking\obj\Debug\net8.0\ref\Parking.dll
 E:\workSpace\ParkingApi\Parking\bin\Debug\net8.0\BCrypt.Net-Next.dll
+E:\workSpace\ParkingApi\Parking\obj\Debug\net8.0\Parking.sourcelink.json

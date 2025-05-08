@@ -7,6 +7,7 @@
         public int SpaceId { get; set; }
         public DateTime EntryTime { get ; set; }
         public DateTime ExitTime { get; set; }
+        public bool IsEntry { get; set; }
 
     }
 }

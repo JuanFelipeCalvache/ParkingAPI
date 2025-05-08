@@ -7,6 +7,9 @@
         public string SpaceCode { get; set; }
         public DateTime EntryTime { get; set; }
         public DateTime? ExitTime { get; set; }
-        public TimeSpan? Duration => ExitTime.HasValue ? ExitTime.Value - EntryTime : null;
+        public decimal AmountToPay { get; set; }
+
+        public bool Success { get; set; } = true;
+        public string Message { get; set; }
     }
 }

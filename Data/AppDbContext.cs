@@ -11,6 +11,7 @@ namespace Parking.Data
         public DbSet<Vehicle> Vehicles { get; set; }
         public DbSet<EntryExit> EntryExits { get; set; }
         public DbSet<Space> Spaces { get; set; }
+        public DbSet<Tariff> Tariffs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

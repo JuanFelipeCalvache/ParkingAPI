@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Parking.Data;
 
@@ -11,9 +12,11 @@ using Parking.Data;
 namespace Parking.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250508155505_UpdateVehicleTable")]
+    partial class UpdateVehicleTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -72,26 +75,6 @@ namespace Parking.Migrations
                     b.ToTable("Spaces");
                 });
 
-            modelBuilder.Entity("Parking.Models.Tariff", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<decimal>("RatePerHour")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("VehicleType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Tariffs");
-                });
-
             modelBuilder.Entity("Parking.Models.User", b =>
                 {
                     b.Property<int>("Id")
@@ -141,7 +124,12 @@ namespace Parking.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Vehicles");
                 });
@@ -170,6 +158,22 @@ namespace Parking.Migrations
                         .HasForeignKey("VehicleId");
 
                     b.Navigation("vehicle");
+                });
+
+            modelBuilder.Entity("Parking.Models.Vehicle", b =>
+                {
+                    b.HasOne("Parking.Models.User", "user")
+                        .WithMany("Vehicles")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("user");
+                });
+
+            modelBuilder.Entity("Parking.Models.User", b =>
+                {
+                    b.Navigation("Vehicles");
                 });
 
             modelBuilder.Entity("Parking.Models.Vehicle", b =>

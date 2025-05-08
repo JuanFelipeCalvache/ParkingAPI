@@ -51,6 +51,9 @@ namespace Parking.Controllers
                 return Unauthorized("Credenciales inválidas.");
             }
 
+            var expiration = DateTime.UtcNow.AddMinutes(15);
+            var expirationLocal = TimeZoneInfo.ConvertTimeFromUtc(expiration, TimeZoneInfo.FindSystemTimeZoneById("America/Bogota"));
+
             var token = _authService.GenerateToken(user);
             var response = new AuthResponseDTO
             {
@@ -62,7 +65,8 @@ namespace Parking.Controllers
                     UserName = user.Name,
                     Rol = user.Rol,
 
-                }
+                },
+                Expiration = expirationLocal
             };
 
             return Ok(response);
