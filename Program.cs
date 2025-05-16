@@ -43,6 +43,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 // Add services to the container.
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<TariffService>();
+builder.Services.AddScoped<SpaceService>();
+builder.Services.AddScoped<EntryExitService>();
 
 //Add controllers 
 builder.Services.AddControllers();

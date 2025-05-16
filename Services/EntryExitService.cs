@@ -28,7 +28,6 @@ namespace Parking.Services
                     NumberPlate = vehicleDTO.Plate,
                     Type = vehicleDTO.Type,
                     Owner = vehicleDTO.Owner
-
                 };
 
                 _context.Vehicles.Add(vehicle);
@@ -37,7 +36,7 @@ namespace Parking.Services
 
 
             //Is space empty
-            var space = await _context.Spaces.FirstOrDefaultAsync(s => s.Id == entryDTO.SpaceId && !s.IsOcuppied);
+            var space = await _context.Spaces.FirstOrDefaultAsync(s => s.Id == entryDTO.SpaceId && !s.IsOccupied);
             if (space ==null)
             {
                 return new EntryExitResponseDTO { Success = false, Message = "Space is not available. " };
@@ -48,12 +47,13 @@ namespace Parking.Services
             {
                 VehicleId = vehicle.Id,
                 SpaceId = entryDTO.SpaceId,
-                EntryTime = DateTime.UtcNow,
+                EntryTime = DateTime.Now,
                 
             };
 
             //Mark space like bussy
-            space.IsOcuppied = true;
+            space.IsOccupied = true;
+            space.VehicleId = vehicle.Id;
 
             _context.EntryExits.Add(entryExit);
             _context.Spaces.Update(space);
@@ -92,7 +92,7 @@ namespace Parking.Services
             var space = await _context.Spaces.FirstOrDefaultAsync(s => s.Id == entryExit.SpaceId);
             if (space != null)
             {
-                space.IsOcuppied = false;
+                space.IsOccupied = false;
                 _context.Spaces.Update(space);
             }
 
@@ -148,7 +148,20 @@ namespace Parking.Services
             }).ToList();
         }
 
+        public async Task<bool> DeleteEntryExitAsync(int id)
+        {
+            var record = await _context.EntryExits.FirstOrDefaultAsync(e => e.Id == id);
 
+            if(record == null)
+            {
+                return false;
+            }
+
+            _context.EntryExits.Remove(record);
+            await _context.SaveChangesAsync();
+
+            return true;
+        }
 
     }
 }

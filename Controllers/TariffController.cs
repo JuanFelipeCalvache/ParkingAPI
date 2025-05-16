@@ -26,8 +26,21 @@ namespace Parking.Controllers
             catch (Exception ex) 
             {
                 return BadRequest($"Error: {ex.Message}");
+            } 
+        }
+
+        [HttpGet("{vehicleType}")]
+        public async Task<ActionResult<TariffDTO>> GetTariff(string vehicleType)
+        {
+            try
+            {
+                var tariff = await _tariffService.GetTariffAsync(vehicleType);
+                return Ok(tariff);
             }
-            
+            catch (Exception ex)
+            {
+                return BadRequest($"Error: {ex.Message}");
+            }
         }
 
         [HttpPost]
@@ -37,5 +50,36 @@ namespace Parking.Controllers
             return Ok(new {message = "Tariff Added successfully"});
         }
 
+        [HttpPut("tariff/change-infor")]
+        public async Task<IActionResult> ChangeInfoTariff(TariffDTO dto)
+        {
+            if(dto == null)
+            {
+                return null;
+            }
+
+            var success = await _tariffService.UpdateTariffAsync(dto);
+
+            if(!success)
+            {
+                return BadRequest("Invalid request");
+            }
+
+            return Ok("Satisfactorys changes");
+
+        }
+
+        [HttpDelete("tariff-delete/{id}")]
+        public async Task<IActionResult> DeleteTariff(int id)
+        {
+            var success = await _tariffService.DeleteTariff(id);
+
+            if(!success)
+            {
+                return BadRequest("Tariff not found");
+            }
+
+            return Ok("Record Deleted Succesfuly");
+        }
     }
 }
