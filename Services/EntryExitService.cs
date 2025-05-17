@@ -18,13 +18,15 @@ namespace Parking.Services
 
         public async Task<EntryExitResponseDTO> RegisterEntryAsync(EntryDTO entryDTO,VehicleDTO vehicleDTO )
         {
+            var normalizedPlate = vehicleDTO.Plate.Trim().ToUpper();
+
             //Does the Vehicle exist ?
-            var vehicle = await _context.Vehicles.FirstOrDefaultAsync(v => v.Id == entryDTO.VehicleId);
+            var vehicle = await _context.Vehicles.FirstOrDefaultAsync(v => v.NumberPlate == normalizedPlate);
             if (vehicle == null)
             {
                 vehicle = new Vehicle
                 {
-                    Id = vehicleDTO.Id,
+
                     NumberPlate = vehicleDTO.Plate,
                     Type = vehicleDTO.Type,
                     Owner = vehicleDTO.Owner
@@ -48,7 +50,6 @@ namespace Parking.Services
                 VehicleId = vehicle.Id,
                 SpaceId = entryDTO.SpaceId,
                 EntryTime = DateTime.Now,
-                
             };
 
             //Mark space like bussy
@@ -65,7 +66,6 @@ namespace Parking.Services
                 VehiclePlate = vehicle.NumberPlate,
                 SpaceCode = space.Id.ToString(),
                 EntryTime = entryExit.EntryTime
-
             };
 
         }
@@ -85,8 +85,21 @@ namespace Parking.Services
                 return new EntryExitResponseDTO { Success = false, Message = "Active entry not found for this vehicle." };
             }
 
+
             // Registrar la salida
             entryExit.ExitTime = exitDTO.ExitTime;
+
+
+            //Tiempo Total de permanencia
+            TimeSpan duration = entryExit.ExitTime.Value - entryExit.EntryTime;
+
+            decimal totalHours = (decimal)Math.Ceiling(duration.TotalHours);
+
+            decimal ratePerHour = exitDTO.TariffDTO.RatePerHour;
+            decimal fee = totalHours * ratePerHour;
+
+            entryExit.FeeToPaid = fee;
+
 
             // Liberar espacio
             var space = await _context.Spaces.FirstOrDefaultAsync(s => s.Id == entryExit.SpaceId);

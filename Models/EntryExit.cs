@@ -11,5 +11,8 @@
 
         public int? SpaceId { get; set; }
         public Space Space { get; set; }
+
+
+        public decimal FeeToPaid { get; set; }
     }
 }

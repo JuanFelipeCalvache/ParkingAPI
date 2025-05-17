@@ -2,7 +2,7 @@
 {
     public class EntryDTO
     {
-        public int VehicleId { get; set; }
+        public int VehiclePlate { get; set; }
         public int SpaceId { get; set; }
     }
 }

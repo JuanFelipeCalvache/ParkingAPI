@@ -16,6 +16,11 @@ namespace Parking.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Vehicle>()
+                .HasIndex(v => v.NumberPlate)
+                .IsUnique();
+
         }
 
 

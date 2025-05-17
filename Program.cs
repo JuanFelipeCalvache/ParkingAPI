@@ -45,6 +45,7 @@ builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<TariffService>();
 builder.Services.AddScoped<SpaceService>();
 builder.Services.AddScoped<EntryExitService>();
+builder.Services.AddScoped<VehicleService>();
 
 //Add controllers 
 builder.Services.AddControllers();
