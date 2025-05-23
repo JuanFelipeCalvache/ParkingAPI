@@ -1,16 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Parking.DTOs;
+using Parking.interfaces;
 using Parking.Services;
 
 namespace Parking.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class SpaceController : Controller
+    public class SpaceController : ControllerBase
     {
-        private readonly SpaceService _spaceService;
+        private readonly ISpaceService _spaceService;
 
-        public SpaceController(SpaceService spaceService)
+        public SpaceController(ISpaceService spaceService)
         {
             _spaceService = spaceService;
         }

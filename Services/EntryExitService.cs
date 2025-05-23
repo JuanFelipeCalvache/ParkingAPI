@@ -2,10 +2,11 @@
 using Parking.DTOs;
 using Microsoft.EntityFrameworkCore;
 using Parking.Models;
+using Parking.interfaces;
 
 namespace Parking.Services
 {
-    public class EntryExitService
+    public class EntryExitService : IEntryExitService
     {
         private readonly AppDbContext _context;
         private readonly IConfiguration _config;
@@ -15,6 +16,7 @@ namespace Parking.Services
             _context = context;
             _config = config;
         }
+
 
         public async Task<EntryExitResponseDTO> RegisterEntryAsync(EntryDTO entryDTO,VehicleDTO vehicleDTO )
         {
@@ -124,7 +126,6 @@ namespace Parking.Services
         }
 
 
-
         public async Task<List<EntryExitResponseDTO>> GetAllEntriesExitsAsync()
         {
             var entriesExits = await _context.EntryExits
@@ -132,14 +133,33 @@ namespace Parking.Services
                 .Include(e => e.Space)
                 .ToListAsync();
 
-            return entriesExits.Select(entryExit => new EntryExitResponseDTO
+            var tariff = await _context.Tariffs.FirstOrDefaultAsync();
+
+            return entriesExits.Select(entryExit =>
             {
-                Id = entryExit.Id,
-                VehiclePlate = entryExit.Vehicle.NumberPlate,
-                SpaceCode = entryExit.Space.Id.ToString(),
-                EntryTime = entryExit.EntryTime,
-                ExitTime = entryExit.ExitTime,
-            }).ToList();
+                decimal fee = 0;
+                
+                if(entryExit.ExitTime != null)
+                {
+                    fee = entryExit.FeeToPaid ?? 0;
+                } 
+                else
+                {
+                    var hours = (DateTime.Now - entryExit.EntryTime).TotalHours;
+                    var roundedHours = Math.Ceiling(hours);
+                    fee = (decimal)roundedHours * tariff.RatePerHour;
+                }
+
+                return new EntryExitResponseDTO
+                {
+                    Id = entryExit.Id,
+                    VehiclePlate = entryExit.Vehicle.NumberPlate,
+                    SpaceCode = entryExit.Space.Id.ToString(),
+                    EntryTime = entryExit.EntryTime,
+                    ExitTime = entryExit.ExitTime,
+                    AmountToPay = fee
+                };
+             }).ToList();
         }
 
 
@@ -160,6 +180,7 @@ namespace Parking.Services
                 ExitTime = entryExit.ExitTime,
             }).ToList();
         }
+
 
         public async Task<bool> DeleteEntryExitAsync(int id)
         {

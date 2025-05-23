@@ -1,16 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Parking.DTOs;
+using Parking.interfaces;
 using Parking.Services;
 
 namespace Parking.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class TariffController : Controller
+    public class TariffController : ControllerBase
     {
-        private readonly TariffService _tariffService;
+        private readonly ITariffService _tariffService;
         
-        public TariffController(TariffService tariffService)
+        public TariffController(ITariffService tariffService)
         {
             _tariffService = tariffService;
         }

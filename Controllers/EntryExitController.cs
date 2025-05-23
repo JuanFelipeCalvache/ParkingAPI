@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Parking.DTOs;
+using Parking.interfaces;
 using Parking.Services;
 
 
@@ -7,11 +8,11 @@ namespace Parking.Controllers
 {
     [ApiController]
     [Route("Api/[controller]")]
-    public class EntryExitController : Controller
+    public class EntryExitController : ControllerBase
     {
-        private readonly EntryExitService _entryExitService;
+        private readonly IEntryExitService _entryExitService;
 
-        public EntryExitController(EntryExitService entryExitService)
+        public EntryExitController(IEntryExitService entryExitService)
         {
             _entryExitService = entryExitService;
         }
@@ -34,6 +35,7 @@ namespace Parking.Controllers
             return Ok(result);
         }
 
+
         [HttpPost("exit/{vehiclePlate}")]
         public async Task<IActionResult> RegisterExit(string vehiclePlate, [FromBody]  ExitDTO exitDTO)
         {
@@ -52,6 +54,7 @@ namespace Parking.Controllers
             return Ok(result);
         }
 
+
         [HttpGet]
         public async Task<ActionResult<List<EntryExitResponseDTO>>> GetEntryExitsRegisters()
         {
@@ -65,6 +68,7 @@ namespace Parking.Controllers
                 return BadRequest($"Error: {ex.Message}");
             }
         }
+
 
         [HttpDelete("entry-exit/{id}")]
         public async Task<IActionResult> DeleteEntryExit(int id)

@@ -13,6 +13,6 @@
         public Space Space { get; set; }
 
 
-        public decimal FeeToPaid { get; set; }
+        public decimal? FeeToPaid { get; set; }
     }
 }

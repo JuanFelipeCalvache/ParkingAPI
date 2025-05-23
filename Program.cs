@@ -5,6 +5,7 @@ using Parking.Helpers;
 using Microsoft.EntityFrameworkCore;
 using Parking.Data;
 using Parking.Services;
+using Parking.interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -53,10 +54,10 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 // Add services to the container.
 builder.Services.AddScoped<AuthService>();
-builder.Services.AddScoped<TariffService>();
-builder.Services.AddScoped<SpaceService>();
-builder.Services.AddScoped<EntryExitService>();
-builder.Services.AddScoped<VehicleService>();
+builder.Services.AddScoped<ITariffService, TariffService>();
+builder.Services.AddScoped<ISpaceService, SpaceService>();
+builder.Services.AddScoped<IEntryExitService, EntryExitService>();
+builder.Services.AddScoped<IVehicleService, VehicleService>();
 
 //Add controllers 
 builder.Services.AddControllers();

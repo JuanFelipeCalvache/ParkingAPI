@@ -1,12 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Parking.Data;
 using Parking.DTOs;
+using Parking.interfaces;
 using Parking.Models;
 using System.Runtime.InteropServices;
 
 namespace Parking.Services
 {
-    public class SpaceService
+    public class SpaceService : ISpaceService
     {
         private readonly AppDbContext _context;
         private readonly IConfiguration _config;

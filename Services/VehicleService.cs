@@ -2,10 +2,11 @@
 using Parking.DTOs;
 using Parking.Data;
 using Parking.Models;
+using Parking.interfaces;
 
 namespace Parking.Services
 {
-    public class VehicleService
+    public class VehicleService : IVehicleService
     {
         private readonly  AppDbContext _context;
         private readonly IConfiguration _config;
@@ -17,6 +18,7 @@ namespace Parking.Services
             _config = config;  
 
         }
+
 
         public async Task<List<VehicleDTO>> GetAllVehiclesAsync()
         {

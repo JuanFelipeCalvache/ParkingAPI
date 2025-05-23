@@ -1,16 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Parking.DTOs;
+using Parking.interfaces;
 using Parking.Services;
 
 namespace Parking.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class VehicleController : Controller
+    public class VehicleController : ControllerBase
     {
 
-        private readonly VehicleService _vehicleService;
-        public VehicleController(VehicleService vehicleService)
+        private readonly IVehicleService _vehicleService;
+        public VehicleController(IVehicleService vehicleService)
         {
             _vehicleService = vehicleService;
         }
