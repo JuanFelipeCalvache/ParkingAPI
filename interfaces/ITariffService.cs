@@ -1,4 +1,5 @@
 ﻿using Parking.DTOs;
+using Parking.Models;
 
 namespace Parking.interfaces
 {
@@ -9,5 +10,7 @@ namespace Parking.interfaces
         Task AddTariffAsync (TariffDTO tariffDTO);
         Task<bool> UpdateTariffAsync(TariffDTO tariffDTO);
         Task<bool> DeleteTariff(int id);
+
+        decimal CalculateFee(EntryExit entryExit, decimal ratePerHour);
     }
 }

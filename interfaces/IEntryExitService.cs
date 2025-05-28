@@ -10,6 +10,8 @@ namespace Parking.interfaces
 
         Task<List<EntryExitResponseDTO>> GetAllEntriesExitsAsync();
 
+        Task<List<EntryExitResponseDTO>> GetEntrysInParking();
+
         Task<List<EntryExitResponseDTO>> GetEntriesExitsByVehicleAsync(int id);
 
         Task<bool> DeleteEntryExitAsync(int id);

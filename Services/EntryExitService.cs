@@ -10,11 +10,13 @@ namespace Parking.Services
     {
         private readonly AppDbContext _context;
         private readonly IConfiguration _config;
+        private readonly ITariffService _tariffService;
 
-        public EntryExitService(AppDbContext context, IConfiguration config)
+        public EntryExitService(AppDbContext context, IConfiguration config, ITariffService tariffService)
         {
             _context = context;
             _config = config;
+            _tariffService = tariffService;
         }
 
 
@@ -52,6 +54,7 @@ namespace Parking.Services
                 VehicleId = vehicle.Id,
                 SpaceId = entryDTO.SpaceId,
                 EntryTime = DateTime.Now,
+                FeeToPaid = 0m
             };
 
             //Mark space like bussy
@@ -88,20 +91,18 @@ namespace Parking.Services
             }
 
 
-            // Registrar la salida
+            // Register Exit
             entryExit.ExitTime = exitDTO.ExitTime;
 
+            var tariff = await _context.Tariffs.FirstOrDefaultAsync();
 
-            //Tiempo Total de permanencia
-            TimeSpan duration = entryExit.ExitTime.Value - entryExit.EntryTime;
+            if (tariff == null)
+            {
+                return new EntryExitResponseDTO { Success = false, Message = "Tariff configuration not found." };
+            }
 
-            decimal totalHours = (decimal)Math.Ceiling(duration.TotalHours);
-
-            decimal ratePerHour = exitDTO.TariffDTO.RatePerHour;
-            decimal fee = totalHours * ratePerHour;
-
-            entryExit.FeeToPaid = fee;
-
+            //Total time in
+            entryExit.FeeToPaid = _tariffService.CalculateFee(entryExit, tariff.RatePerHour);
 
             // Liberar espacio
             var space = await _context.Spaces.FirstOrDefaultAsync(s => s.Id == entryExit.SpaceId);
@@ -121,6 +122,7 @@ namespace Parking.Services
                 SpaceCode = space?.Id.ToString(),
                 EntryTime = entryExit.EntryTime,
                 ExitTime = entryExit.ExitTime,
+                AmountToPay = entryExit.FeeToPaid ?? 0,
                 Success = true
             };
         }
@@ -135,20 +137,21 @@ namespace Parking.Services
 
             var tariff = await _context.Tariffs.FirstOrDefaultAsync();
 
-            return entriesExits.Select(entryExit =>
+            if (tariff == null)
             {
-                decimal fee = 0;
-                
-                if(entryExit.ExitTime != null)
+                return new List<EntryExitResponseDTO>
                 {
-                    fee = entryExit.FeeToPaid ?? 0;
-                } 
-                else
-                {
-                    var hours = (DateTime.Now - entryExit.EntryTime).TotalHours;
-                    var roundedHours = Math.Ceiling(hours);
-                    fee = (decimal)roundedHours * tariff.RatePerHour;
-                }
+                    new EntryExitResponseDTO {Success = false, Message = "Tariff configuration not found"}
+                };
+            }
+
+
+            var responseTask=  entriesExits.Select(async entryExit =>
+            {
+
+                var fee = _tariffService.CalculateFee(entryExit, tariff.RatePerHour);
+                entryExit.FeeToPaid = fee;
+
 
                 return new EntryExitResponseDTO
                 {
@@ -157,11 +160,55 @@ namespace Parking.Services
                     SpaceCode = entryExit.Space.Id.ToString(),
                     EntryTime = entryExit.EntryTime,
                     ExitTime = entryExit.ExitTime,
-                    AmountToPay = fee
+                    AmountToPay = fee,
+                    Success = true
                 };
-             }).ToList();
+             });
+
+            var responelist = await Task.WhenAll(responseTask);
+
+            return responelist.ToList();
         }
 
+
+        public async Task<List<EntryExitResponseDTO>> GetEntrysInParking() {
+
+            var vehiclesInParking = await _context.EntryExits
+                .Include(v => v.Vehicle)
+                .Include(v => v.Space)
+                .Where(v => v.ExitTime == null)
+                .ToListAsync();
+
+
+            var tariff = await _context.Tariffs.FirstOrDefaultAsync();
+
+            if (tariff == null)
+            {
+                return new List<EntryExitResponseDTO>
+                {
+                    new EntryExitResponseDTO {Success = false, Message = "Tariff configuration not found"}
+                };
+            }
+
+            var result =  vehiclesInParking.Select(entry => 
+            {
+                var fee = _tariffService.CalculateFee(entry, tariff.RatePerHour);
+                entry.FeeToPaid = fee;
+
+                return new EntryExitResponseDTO
+                {
+                    Id = entry.Id,
+                    VehiclePlate = entry.Vehicle.NumberPlate,
+                    SpaceCode = entry.Space.Id.ToString(),
+                    EntryTime = entry.EntryTime,
+                    ExitTime = entry.ExitTime,
+                    AmountToPay = fee
+                };
+            }).ToList();
+
+            return result;
+
+        }
 
         public async Task<List<EntryExitResponseDTO>> GetEntriesExitsByVehicleAsync(int vehicleId)
         {

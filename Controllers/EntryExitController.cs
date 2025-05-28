@@ -69,6 +69,20 @@ namespace Parking.Controllers
             }
         }
 
+        [HttpGet("entrysInParking")]
+        public async Task<ActionResult<List<EntryExitResponseDTO>>> GetEntrysRegisters()
+        {
+            try
+            {
+                var entrys = await _entryExitService.GetEntrysInParking();
+                return Ok(entrys);
+            }
+            catch (Exception exEntrys)
+            {
+                return BadRequest($"Error: {exEntrys.Message}");
+            }
+        }
+
 
         [HttpDelete("entry-exit/{id}")]
         public async Task<IActionResult> DeleteEntryExit(int id)

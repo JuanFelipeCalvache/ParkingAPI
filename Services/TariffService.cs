@@ -93,5 +93,13 @@ namespace Parking.Services
             return true;
 
         }
+
+        public decimal CalculateFee(EntryExit entryExit, decimal ratePerHour)
+        {
+            var endTime = entryExit.ExitTime ?? DateTime.Now;
+            var totalHours = (decimal)Math.Ceiling((endTime - entryExit.EntryTime).TotalHours);
+            return totalHours * ratePerHour;
+        }
+
     }
 }
