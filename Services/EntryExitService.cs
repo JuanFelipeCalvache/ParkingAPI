@@ -31,13 +31,25 @@ namespace Parking.Services
                 vehicle = new Vehicle
                 {
 
-                    NumberPlate = vehicleDTO.Plate,
+                    NumberPlate = vehicleDTO.Plate.Trim().ToUpper(),
                     Type = vehicleDTO.Type,
                     Owner = vehicleDTO.Owner
                 };
 
                 _context.Vehicles.Add(vehicle);
                 await _context.SaveChangesAsync();
+            }
+
+            var isAlreadyInside = await _context.EntryExits
+                .AnyAsync(e => e.VehicleId == vehicle.Id && e.ExitTime == null);
+
+            if(isAlreadyInside)
+            {
+                return new EntryExitResponseDTO
+                {
+                    Success = false,
+                    Message = "The vehicle is already inside the parking lot"
+                };
             }
 
 
@@ -109,6 +121,7 @@ namespace Parking.Services
             if (space != null)
             {
                 space.IsOccupied = false;
+                space.VehicleId = null;
                 _context.Spaces.Update(space);
             }
 
@@ -148,9 +161,17 @@ namespace Parking.Services
 
             var responseTask=  entriesExits.Select(async entryExit =>
             {
+                decimal fee;
 
-                var fee = _tariffService.CalculateFee(entryExit, tariff.RatePerHour);
-                entryExit.FeeToPaid = fee;
+                if (entryExit.ExitTime == null)
+                {
+                    fee = _tariffService.CalculateFee(entryExit, tariff.RatePerHour);
+                    entryExit.FeeToPaid = fee;
+                }
+                else
+                {
+                    fee = entryExit.FeeToPaid ?? 0;
+                }
 
 
                 return new EntryExitResponseDTO

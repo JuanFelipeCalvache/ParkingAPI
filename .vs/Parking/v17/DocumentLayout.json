@@ -3,24 +3,12 @@
   "WorkspaceRootPath": "E:\\workSpace\\ParkingApi\\Parking\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|e:\\workspace\\parkingapi\\parking\\parking.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|",
+      "RelativeMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|solutionrelative:parking.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|e:\\workspace\\parkingapi\\parking\\services\\entryexitservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|solutionrelative:services\\entryexitservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|e:\\workspace\\parkingapi\\parking\\interfaces\\itariffservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|solutionrelative:interfaces\\itariffservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|e:\\workspace\\parkingapi\\parking\\services\\spaceservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|solutionrelative:services\\spaceservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|e:\\workspace\\parkingapi\\parking\\services\\tariffservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|solutionrelative:services\\tariffservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|e:\\workspace\\parkingapi\\parking\\services\\vehicleservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|solutionrelative:services\\vehicleservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|e:\\workspace\\parkingapi\\parking\\controllers\\entryexitcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -29,6 +17,22 @@
     {
       "AbsoluteMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|e:\\workspace\\parkingapi\\parking\\interfaces\\ientryexitservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|solutionrelative:interfaces\\ientryexitservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|e:\\workspace\\parkingapi\\parking\\interfaces\\itariffservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|solutionrelative:interfaces\\itariffservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|e:\\workspace\\parkingapi\\parking\\services\\tariffservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|solutionrelative:services\\tariffservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|e:\\workspace\\parkingapi\\parking\\services\\spaceservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|solutionrelative:services\\spaceservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|e:\\workspace\\parkingapi\\parking\\services\\vehicleservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|solutionrelative:services\\vehicleservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|e:\\workspace\\parkingapi\\parking\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -54,11 +58,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 12,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "IVehicleService.cs",
               "DocumentMoniker": "E:\\workSpace\\ParkingApi\\Parking\\interfaces\\IVehicleService.cs",
               "RelativeDocumentMoniker": "interfaces\\IVehicleService.cs",
@@ -71,7 +75,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 7,
               "Title": "VehicleService.cs",
               "DocumentMoniker": "E:\\workSpace\\ParkingApi\\Parking\\Services\\VehicleService.cs",
               "RelativeDocumentMoniker": "Services\\VehicleService.cs",
@@ -80,21 +84,31 @@
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAxAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-16T23:21:33.699Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 2,
               "Title": "EntryExitController.cs",
               "DocumentMoniker": "E:\\workSpace\\ParkingApi\\Parking\\Controllers\\EntryExitController.cs",
               "RelativeDocumentMoniker": "Controllers\\EntryExitController.cs",
               "ToolTip": "E:\\workSpace\\ParkingApi\\Parking\\Controllers\\EntryExitController.cs",
               "RelativeToolTip": "Controllers\\EntryExitController.cs",
-              "ViewState": "AQIAADUAAAAAAAAAAAAwwFMAAAAJAAAA",
+              "ViewState": "AQIAAAsAAAAAAAAAAAAQwFMAAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-23T21:31:23.411Z",
-              "IsPinned": true,
+              "IsPinned": true
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Parking",
+              "DocumentMoniker": "E:\\workSpace\\ParkingApi\\Parking\\Parking.csproj",
+              "RelativeDocumentMoniker": "Parking.csproj",
+              "ToolTip": "E:\\workSpace\\ParkingApi\\Parking\\Parking.csproj",
+              "RelativeToolTip": "Parking.csproj",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-06-02T15:48:07.598Z",
               "EditorCaption": ""
             },
             {
@@ -115,46 +129,43 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "TariffService.cs",
               "DocumentMoniker": "E:\\workSpace\\ParkingApi\\Parking\\Services\\TariffService.cs",
               "RelativeDocumentMoniker": "Services\\TariffService.cs",
               "ToolTip": "E:\\workSpace\\ParkingApi\\Parking\\Services\\TariffService.cs",
               "RelativeToolTip": "Services\\TariffService.cs",
-              "ViewState": "AQIAAAoAAAAAAAAAAAAcwGAAAABNAAAA",
+              "ViewState": "AQIAAB4AAAAAAAAAAAA1wGcAAAAFAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-28T15:32:53.833Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-28T15:32:53.833Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "ITariffService.cs",
               "DocumentMoniker": "E:\\workSpace\\ParkingApi\\Parking\\interfaces\\ITariffService.cs",
               "RelativeDocumentMoniker": "interfaces\\ITariffService.cs",
               "ToolTip": "E:\\workSpace\\ParkingApi\\Parking\\interfaces\\ITariffService.cs",
               "RelativeToolTip": "interfaces\\ITariffService.cs",
-              "ViewState": "AQIAAAcAAAAAAAAAAAAAwA0AAABHAAAA",
+              "ViewState": "AQIAAAcAAAAAAAAAAAAuwA0AAABHAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-28T15:32:50.733Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-28T15:32:50.733Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 3,
               "Title": "IEntryExitService.cs",
               "DocumentMoniker": "E:\\workSpace\\ParkingApi\\Parking\\interfaces\\IEntryExitService.cs",
               "RelativeDocumentMoniker": "interfaces\\IEntryExitService.cs",
               "ToolTip": "E:\\workSpace\\ParkingApi\\Parking\\interfaces\\IEntryExitService.cs",
               "RelativeToolTip": "interfaces\\IEntryExitService.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAA+AAAA",
+              "ViewState": "AQIAAA4AAAAAAAAAAAAIwAwAAAA+AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-28T14:39:27.124Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-28T14:39:27.124Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 6,
               "Title": "SpaceService.cs",
               "DocumentMoniker": "E:\\workSpace\\ParkingApi\\Parking\\Services\\SpaceService.cs",
               "RelativeDocumentMoniker": "Services\\SpaceService.cs",
@@ -162,12 +173,11 @@
               "RelativeToolTip": "Services\\SpaceService.cs",
               "ViewState": "AQIAAB4AAAAAAAAAAAAowAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-26T21:50:02.721Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-26T21:50:02.721Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "UserService.cs",
               "DocumentMoniker": "E:\\workSpace\\ParkingApi\\Parking\\Services\\UserService.cs",
               "RelativeDocumentMoniker": "Services\\UserService.cs",
@@ -179,20 +189,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "EntryExitService.cs",
               "DocumentMoniker": "E:\\workSpace\\ParkingApi\\Parking\\Services\\EntryExitService.cs",
               "RelativeDocumentMoniker": "Services\\EntryExitService.cs",
               "ToolTip": "E:\\workSpace\\ParkingApi\\Parking\\Services\\EntryExitService.cs",
               "RelativeToolTip": "Services\\EntryExitService.cs",
-              "ViewState": "AQIAAA4AAAAAAAAAAAAQwK0AAABLAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAALcAAAAmAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-23T21:36:08.609Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "VehicleController.cs",
               "DocumentMoniker": "E:\\workSpace\\ParkingApi\\Parking\\Controllers\\VehicleController.cs",
               "RelativeDocumentMoniker": "Controllers\\VehicleController.cs",
@@ -204,7 +214,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "Program.cs",
               "DocumentMoniker": "E:\\workSpace\\ParkingApi\\Parking\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
