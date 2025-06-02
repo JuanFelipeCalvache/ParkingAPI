@@ -1,11 +1,12 @@
 {
   "Version": 1,
-  "Hash": "D1mcP7D/MtPRVX4P8jVrZmpGxnFI8cguLQxuZoOgSpo=",
+  "Hash": "pM3CSkJ/roflNblm9zBW8+/nsX/dSLDXZ6YPtJRj9cQ=",
   "Source": "Parking",
   "BasePath": "_content/Parking",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
   "DiscoveryPatterns": [],
-  "Assets": []
+  "Assets": [],
+  "Endpoints": []
 }
