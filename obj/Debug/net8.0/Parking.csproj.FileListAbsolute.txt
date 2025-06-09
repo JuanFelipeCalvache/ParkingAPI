@@ -256,3 +256,5 @@ E:\workSpace\ParkingApi\Parking\bin\Debug\net8.0\zh-Hant\Microsoft.TestPlatform.
 E:\workSpace\ParkingApi\Parking\bin\Debug\net8.0\zh-Hant\Microsoft.VisualStudio.TestPlatform.Common.resources.dll
 E:\workSpace\ParkingApi\Parking\obj\Debug\net8.0\staticwebassets.build.endpoints.json
 E:\workSpace\ParkingApi\Parking\obj\Debug\net8.0\staticwebassets\msbuild.Parking.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
+E:\workSpace\ParkingApi\Parking\bin\Debug\net8.0\Castle.Core.dll
+E:\workSpace\ParkingApi\Parking\bin\Debug\net8.0\Moq.dll

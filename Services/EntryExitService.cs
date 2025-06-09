@@ -2,7 +2,7 @@
 using Parking.DTOs;
 using Microsoft.EntityFrameworkCore;
 using Parking.Models;
-using Parking.interfaces;
+using Parking.Services.interfaces;
 
 namespace Parking.Services
 {
@@ -90,6 +90,7 @@ namespace Parking.Services
 
         public async Task<EntryExitResponseDTO> RegisterExitByPlateAsync(string vehiclePlate, ExitDTO exitDTO)
         {
+
             // Buscar entrada activa (sin ExitTime) del vehículo
             var entryExit = await _context.EntryExits
                 .Include(e => e.Vehicle)
@@ -102,19 +103,17 @@ namespace Parking.Services
                 return new EntryExitResponseDTO { Success = false, Message = "Active entry not found for this vehicle." };
             }
 
-
-            // Register Exit
+            // Registrar salida
             entryExit.ExitTime = exitDTO.ExitTime;
 
-            var tariff = await _context.Tariffs.FirstOrDefaultAsync();
-
-            if (tariff == null)
+            var rate = exitDTO.TariffDTO?.RatePerHour ?? 0;
+            if (rate <= 0)
             {
-                return new EntryExitResponseDTO { Success = false, Message = "Tariff configuration not found." };
+                return new EntryExitResponseDTO { Success = false, Message = "Invalid or missing tariff information." };
             }
 
-            //Total time in
-            entryExit.FeeToPaid = _tariffService.CalculateFee(entryExit, tariff.RatePerHour);
+            // Calcular tarifa
+            entryExit.FeeToPaid = _tariffService.CalculateFee(entryExit, rate);
 
             // Liberar espacio
             var space = await _context.Spaces.FirstOrDefaultAsync(s => s.Id == entryExit.SpaceId);
@@ -141,6 +140,7 @@ namespace Parking.Services
         }
 
 
+
         public async Task<List<EntryExitResponseDTO>> GetAllEntriesExitsAsync()
         {
             var entriesExits = await _context.EntryExits
@@ -159,7 +159,7 @@ namespace Parking.Services
             }
 
 
-            var responseTask=  entriesExits.Select(async entryExit =>
+            var responseTask =  entriesExits.Select(entryExit =>
             {
                 decimal fee;
 
@@ -186,7 +186,7 @@ namespace Parking.Services
                 };
              });
 
-            var responelist = await Task.WhenAll(responseTask);
+            var responelist = responseTask.ToList();
 
             return responelist.ToList();
         }

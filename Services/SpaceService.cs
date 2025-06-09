@@ -1,36 +1,34 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Parking.Data;
 using Parking.DTOs;
-using Parking.interfaces;
 using Parking.Models;
+using Parking.Repositories.Interfaces;
+using Parking.Services.interfaces;
 using System.Runtime.InteropServices;
 
 namespace Parking.Services
 {
     public class SpaceService : ISpaceService
     {
-        private readonly AppDbContext _context;
-        private readonly IConfiguration _config;
+        private readonly ISpaceRepository _spaceRepo;
 
-        public SpaceService(AppDbContext context, IConfiguration config)
+        public SpaceService(ISpaceRepository spaceRepo)
         {
-            _context = context;
-            _config = config;
+            _spaceRepo = spaceRepo;
 
         }
 
         public async Task<List<SpaceDTO>> GetAllSpacesAsync()
         {
-            var spaces = await _context.Spaces
-                .Select(s => new SpaceDTO
-                {
-                    Id = s.Id,
-                    IsOccupied = s.IsOccupied,
-                    VehicleId = s.VehicleId
-                })
-                .ToListAsync();
+            var spaces = await _spaceRepo.GetAllSpacesAsync();
 
-            return spaces;
+
+            return spaces.Select(s => new SpaceDTO
+            {
+                Id = s.Id,
+                IsOccupied = s.IsOccupied,
+                VehicleId = s.VehicleId
+            }).ToList();
         }
 
         public async Task AddSpace(SpaceDTO spaceDTO)
@@ -41,25 +39,19 @@ namespace Parking.Services
                 VehicleId = spaceDTO.VehicleId
             };
 
-            _context.Spaces.Add(space);
-            await _context.SaveChangesAsync();
+            await _spaceRepo.AddSpaceAsync(space);
         }
 
         public async Task<bool> ChangeStateSpace(SpaceDTO spaceDto)
         {
-            var space = await _context.Spaces.FirstOrDefaultAsync(s => s.Id == spaceDto.Id);
+            var space = await _spaceRepo.GetSpaceById(spaceDto.Id);
 
-            if (space == null)
-            {
-                return false;
-            }
+            if (space == null) return false;
 
             space.IsOccupied = spaceDto.IsOccupied;
             space.VehicleId = spaceDto.VehicleId;
 
-            _context.Spaces.Update(space);
-            await _context.SaveChangesAsync();
-
+            await _spaceRepo.UpdateSpaceAsync(space);
 
             return true;
                 

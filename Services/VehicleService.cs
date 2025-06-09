@@ -1,56 +1,42 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Parking.DTOs;
-using Parking.Data;
-using Parking.Models;
-using Parking.interfaces;
+﻿using Parking.DTOs;
+using Parking.Repositories.Interfaces;
+using Parking.Services.interfaces;
 
 namespace Parking.Services
 {
     public class VehicleService : IVehicleService
     {
-        private readonly  AppDbContext _context;
-        private readonly IConfiguration _config;
+        private readonly IVehicleRepository _vehicleRepository;
 
 
-        public VehicleService(AppDbContext context, IConfiguration config)
+        public VehicleService(IVehicleRepository vehicleRepo)
         {
-            _context = context;
-            _config = config;  
+            _vehicleRepository = vehicleRepo;
 
         }
 
 
         public async Task<List<VehicleDTO>> GetAllVehiclesAsync()
         {
-            var vehicles = await _context.Vehicles
-                .Select(v => new VehicleDTO
-                {
-                    Id = v.Id,
-                    Plate = v.NumberPlate,
-                    Type = v.Type,
-                    Owner = v.Owner
-                })
-                .ToListAsync();
-            return vehicles;
+            var vehicles = await _vehicleRepository.GetAllVehiclesAsync();
+
+            return vehicles.Select(v => new VehicleDTO
+            {
+                Id = v.Id,
+                Plate = v.NumberPlate,
+                Type = v.Type,
+                Owner = v.Owner,
+            }).ToList();
         }
 
 
         public async Task<bool> DeleteVehicleAsync(int id)
         {
-            var vehicle = await _context.Vehicles.FirstOrDefaultAsync(v => v.Id == id);
+            var vehicle = await _vehicleRepository.GetByIdAsync(id);
+            if (vehicle == null) return false;
 
-            if (vehicle == null) 
-            {
-                return false;
-            }
-
-            _context.Vehicles.Remove(vehicle);
-            await _context.SaveChangesAsync();
-
+            await _vehicleRepository.DeleteAsync(vehicle);
             return true;
-
-
-
         }
 
     }

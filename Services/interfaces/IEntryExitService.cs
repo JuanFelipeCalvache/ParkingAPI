@@ -1,6 +1,6 @@
 ﻿using Parking.DTOs;
 
-namespace Parking.interfaces
+namespace Parking.Services.interfaces
 {
     public interface IEntryExitService
     {

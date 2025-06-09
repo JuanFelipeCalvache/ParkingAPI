@@ -5,7 +5,8 @@ using Parking.Helpers;
 using Microsoft.EntityFrameworkCore;
 using Parking.Data;
 using Parking.Services;
-using Parking.interfaces;
+using Parking.Services.interfaces;
+using Parking.Repositories.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -58,6 +59,13 @@ builder.Services.AddScoped<ITariffService, TariffService>();
 builder.Services.AddScoped<ISpaceService, SpaceService>();
 builder.Services.AddScoped<IEntryExitService, EntryExitService>();
 builder.Services.AddScoped<IVehicleService, VehicleService>();
+
+
+//Add repositories
+builder.Services.AddScoped<IVehicleRepository, IVehicleRepository>();
+builder.Services.AddScoped<ISpaceRepository, ISpaceRepository>();
+builder.Services.AddScoped<ITariffRepository, ITariffRepository>();
+
 
 //Add controllers 
 builder.Services.AddControllers();

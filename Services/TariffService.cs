@@ -2,8 +2,8 @@
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Parking.Data;
 using Parking.DTOs;
-using Parking.interfaces;
 using Parking.Models;
+using Parking.Services.interfaces;
 
 namespace Parking.Services
 {

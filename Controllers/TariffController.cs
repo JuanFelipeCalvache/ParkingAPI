@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Parking.DTOs;
-using Parking.interfaces;
 using Parking.Services;
+using Parking.Services.interfaces;
 
 namespace Parking.Controllers
 {
@@ -51,7 +51,7 @@ namespace Parking.Controllers
             return Ok(new {message = "Tariff Added successfully"});
         }
 
-        [HttpPut("tariff/change-infor")]
+        [HttpPut("update")]
         public async Task<IActionResult> ChangeInfoTariff(TariffDTO dto)
         {
             if(dto == null)
@@ -70,7 +70,7 @@ namespace Parking.Controllers
 
         }
 
-        [HttpDelete("tariff-delete/{id}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTariff(int id)
         {
             var success = await _tariffService.DeleteTariff(id);

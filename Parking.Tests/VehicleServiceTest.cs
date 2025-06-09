@@ -13,6 +13,8 @@ using System.Linq;
 namespace Parking.Parking.Tests
 {
     public class VehicleServiceTest
+
+
     {
         private AppDbContext GetInMemoryDbContext()
         {
@@ -41,7 +43,7 @@ namespace Parking.Parking.Tests
             //arrange
             var context = GetInMemoryDbContext();
             context.Vehicles.Add(new Vehicle { Id = 1, NumberPlate = "ABC123", Type = "Car", Owner = "Juan" });
-            context.Vehicles.Add(new Vehicle { Id = 2, NumberPlate = "JDK12", Type = "Moto", Owner = "Ana" });
+            context.Vehicles.Add(new Vehicle { Id = 2, NumberPlate = "JDK123", Type = "Moto", Owner = "Ana" });
             await context.SaveChangesAsync();
 
             var service = new VehicleService(context, GetFakeConfiguration());
@@ -51,6 +53,7 @@ namespace Parking.Parking.Tests
 
             //Assert 
             Assert.Equal(2, result.Count);
+            Assert.Contains(result, v => v.Plate == "JDK123" && v.Owner == "Ana" && v.Type == "Moto");
             Assert.Contains(result, v => v.Plate == "ABC123");
         }
 
@@ -70,6 +73,7 @@ namespace Parking.Parking.Tests
 
             //Assert
             Assert.True(result);
+            Assert.Null(await context.Vehicles.FindAsync(1));
             Assert.Empty(context.Vehicles);
         }
 
