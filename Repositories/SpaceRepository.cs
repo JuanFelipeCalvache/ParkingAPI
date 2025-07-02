@@ -30,6 +30,11 @@ namespace Parking.Repositories
             return await _context.Spaces.FirstOrDefaultAsync(s => s.Id == id);
         }
 
+        public async Task<Space?> GetAvailableSpaceByIdAsync(int id)
+        {
+            return await _context.Spaces.FirstOrDefaultAsync(s => s.Id == id && !s.IsOccupied);
+        }
+
         public async Task UpdateSpaceAsync(Space space)
         {
             _context.Spaces.Update(space);

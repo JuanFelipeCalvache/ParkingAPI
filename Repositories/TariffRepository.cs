@@ -36,7 +36,7 @@ namespace Parking.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<bool> UpdateTariffAsyn(Tariff tariff)
+        public async Task<bool> UpdateTariffAsync(Tariff tariff)
         {
             var existing = await _context.Tariffs.FirstOrDefaultAsync(t => t.Id == tariff.Id);
 

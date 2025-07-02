@@ -3,28 +3,12 @@
   "WorkspaceRootPath": "E:\\workSpace\\ParkingApi\\Parking\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|e:\\workspace\\parkingapi\\parking\\repositories\\entryexitrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|solutionrelative:repositories\\entryexitrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|e:\\workspace\\parkingapi\\parking\\parking.tests\\spacesservicetest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|solutionrelative:parking.tests\\spacesservicetest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|e:\\workspace\\parkingapi\\parking\\repositories\\interfaces\\ientryexitrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|solutionrelative:repositories\\interfaces\\ientryexitrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|e:\\workspace\\parkingapi\\parking\\services\\interfaces\\ispaceservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|solutionrelative:services\\interfaces\\ispaceservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|e:\\workspace\\parkingapi\\parking\\repositories\\interfaces\\itariffrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|solutionrelative:repositories\\interfaces\\itariffrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|e:\\workspace\\parkingapi\\parking\\services\\entryexitservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|solutionrelative:services\\entryexitservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|e:\\workspace\\parkingapi\\parking\\services\\vehicleservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|solutionrelative:services\\vehicleservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|e:\\workspace\\parkingapi\\parking\\parking.tests\\tariffservicetest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|solutionrelative:parking.tests\\tariffservicetest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|e:\\workspace\\parkingapi\\parking\\parking.tests\\vehicleservicetest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -35,8 +19,68 @@
       "RelativeMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|solutionrelative:parking.tests\\entryexitservicetest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|e:\\workspace\\parkingapi\\parking\\repositories\\entryexitrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|solutionrelative:repositories\\entryexitrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|e:\\workspace\\parkingapi\\parking\\services\\tariffservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|solutionrelative:services\\tariffservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|e:\\workspace\\parkingapi\\parking\\services\\entryexitservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|solutionrelative:services\\entryexitservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|e:\\workspace\\parkingapi\\parking\\repositories\\interfaces\\itariffrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|solutionrelative:repositories\\interfaces\\itariffrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|e:\\workspace\\parkingapi\\parking\\models\\entryexit.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|solutionrelative:models\\entryexit.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|e:\\workspace\\parkingapi\\parking\\dtos\\entrydto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|solutionrelative:dtos\\entrydto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|e:\\workspace\\parkingapi\\parking\\dtos\\entryrequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|solutionrelative:dtos\\entryrequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|e:\\workspace\\parkingapi\\parking\\repositories\\interfaces\\ientryexitrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|solutionrelative:repositories\\interfaces\\ientryexitrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|e:\\workspace\\parkingapi\\parking\\repositories\\interfaces\\ivehiclerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|solutionrelative:repositories\\interfaces\\ivehiclerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|e:\\workspace\\parkingapi\\parking\\services\\interfaces\\ivehicleservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|solutionrelative:services\\interfaces\\ivehicleservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|e:\\workspace\\parkingapi\\parking\\models\\vehicle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|solutionrelative:models\\vehicle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|e:\\workspace\\parkingapi\\parking\\dtos\\exitdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|solutionrelative:dtos\\exitdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|e:\\workspace\\parkingapi\\parking\\repositories\\spacerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|solutionrelative:repositories\\spacerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|e:\\workspace\\parkingapi\\parking\\services\\spaceservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|solutionrelative:services\\spaceservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|e:\\workspace\\parkingapi\\parking\\services\\interfaces\\ispaceservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|solutionrelative:services\\interfaces\\ispaceservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|e:\\workspace\\parkingapi\\parking\\models\\space.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A51C2F7C-297C-41FF-9DB8-9420DFB0A575}|Parking.csproj|solutionrelative:models\\space.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -46,127 +90,85 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 8,
+          "SelectedChildIndex": 10,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
               "Title": "EntryExitService.cs",
               "DocumentMoniker": "E:\\workSpace\\ParkingApi\\Parking\\Services\\EntryExitService.cs",
               "RelativeDocumentMoniker": "Services\\EntryExitService.cs",
               "ToolTip": "E:\\workSpace\\ParkingApi\\Parking\\Services\\EntryExitService.cs",
               "RelativeToolTip": "Services\\EntryExitService.cs",
-              "ViewState": "AQIAAKkAAAAAAAAAAAAYwA0BAAAAAAAA",
+              "ViewState": "AQIAAGAAAAAAAAAAAAAowOcAAAAQAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-23T21:36:08.609Z",
-              "IsPinned": true,
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "EntryExitServiceTest.cs",
-              "DocumentMoniker": "E:\\workSpace\\ParkingApi\\Parking\\Parking.Tests\\EntryExitServiceTest.cs",
-              "RelativeDocumentMoniker": "Parking.Tests\\EntryExitServiceTest.cs",
-              "ToolTip": "E:\\workSpace\\ParkingApi\\Parking\\Parking.Tests\\EntryExitServiceTest.cs",
-              "RelativeToolTip": "Parking.Tests\\EntryExitServiceTest.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAP0AAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-04T14:37:43.737Z",
-              "IsPinned": true,
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "VehicleServiceTest.cs",
-              "DocumentMoniker": "E:\\workSpace\\ParkingApi\\Parking\\Parking.Tests\\VehicleServiceTest.cs",
-              "RelativeDocumentMoniker": "Parking.Tests\\VehicleServiceTest.cs",
-              "ToolTip": "E:\\workSpace\\ParkingApi\\Parking\\Parking.Tests\\VehicleServiceTest.cs",
-              "RelativeToolTip": "Parking.Tests\\VehicleServiceTest.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAACgAAAA/AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-02T16:08:45.56Z",
-              "IsPinned": true,
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "EntryExit.cs",
-              "DocumentMoniker": "E:\\workSpace\\ParkingApi\\Parking\\Models\\EntryExit.cs",
-              "RelativeDocumentMoniker": "Models\\EntryExit.cs",
-              "ToolTip": "E:\\workSpace\\ParkingApi\\Parking\\Models\\EntryExit.cs",
-              "RelativeToolTip": "Models\\EntryExit.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-09T14:53:04.036Z",
               "IsPinned": true
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "ITariffRepository.cs",
-              "DocumentMoniker": "E:\\workSpace\\ParkingApi\\Parking\\Repositories\\Interfaces\\ITariffRepository.cs",
-              "RelativeDocumentMoniker": "Repositories\\Interfaces\\ITariffRepository.cs",
-              "ToolTip": "E:\\workSpace\\ParkingApi\\Parking\\Repositories\\Interfaces\\ITariffRepository.cs",
-              "RelativeToolTip": "Repositories\\Interfaces\\ITariffRepository.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-09T21:01:36.243Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "ISpaceService.cs",
-              "DocumentMoniker": "E:\\workSpace\\ParkingApi\\Parking\\Services\\interfaces\\ISpaceService.cs",
-              "RelativeDocumentMoniker": "Services\\interfaces\\ISpaceService.cs",
-              "ToolTip": "E:\\workSpace\\ParkingApi\\Parking\\Services\\interfaces\\ISpaceService.cs",
-              "RelativeToolTip": "Services\\interfaces\\ISpaceService.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-09T21:01:31.197Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "VehicleService.cs",
-              "DocumentMoniker": "E:\\workSpace\\ParkingApi\\Parking\\Services\\VehicleService.cs",
-              "RelativeDocumentMoniker": "Services\\VehicleService.cs",
-              "ToolTip": "E:\\workSpace\\ParkingApi\\Parking\\Services\\VehicleService.cs",
-              "RelativeToolTip": "Services\\VehicleService.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAACsAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-09T20:59:15.826Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "IEntryExitRepository.cs",
-              "DocumentMoniker": "E:\\workSpace\\ParkingApi\\Parking\\Repositories\\Interfaces\\IEntryExitRepository.cs",
-              "RelativeDocumentMoniker": "Repositories\\Interfaces\\IEntryExitRepository.cs",
-              "ToolTip": "E:\\workSpace\\ParkingApi\\Parking\\Repositories\\Interfaces\\IEntryExitRepository.cs",
-              "RelativeToolTip": "Repositories\\Interfaces\\IEntryExitRepository.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAmAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-09T20:35:28.219Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 4,
               "Title": "EntryExitRepository.cs",
               "DocumentMoniker": "E:\\workSpace\\ParkingApi\\Parking\\Repositories\\EntryExitRepository.cs",
               "RelativeDocumentMoniker": "Repositories\\EntryExitRepository.cs",
               "ToolTip": "E:\\workSpace\\ParkingApi\\Parking\\Repositories\\EntryExitRepository.cs",
               "RelativeToolTip": "Repositories\\EntryExitRepository.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABoAAAAAAAAA",
+              "ViewState": "AQIAAAgAAAAAAAAAAAAxwDQAAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-09T20:35:25.791Z",
-              "EditorCaption": ""
+              "IsPinned": true
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "EntryExitServiceTest.cs",
+              "DocumentMoniker": "E:\\workSpace\\ParkingApi\\Parking\\Parking.Tests\\EntryExitServiceTest.cs",
+              "RelativeDocumentMoniker": "Parking.Tests\\EntryExitServiceTest.cs",
+              "ToolTip": "E:\\workSpace\\ParkingApi\\Parking\\Parking.Tests\\EntryExitServiceTest.cs",
+              "RelativeToolTip": "Parking.Tests\\EntryExitServiceTest.cs",
+              "ViewState": "AQIAAIUAAAAAAAAAAAAcwIYAAABJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-04T14:37:43.737Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "TariffServiceTest.cs",
+              "DocumentMoniker": "E:\\workSpace\\ParkingApi\\Parking\\Parking.Tests\\TariffServiceTest.cs",
+              "RelativeDocumentMoniker": "Parking.Tests\\TariffServiceTest.cs",
+              "ToolTip": "E:\\workSpace\\ParkingApi\\Parking\\Parking.Tests\\TariffServiceTest.cs",
+              "RelativeToolTip": "Parking.Tests\\TariffServiceTest.cs",
+              "ViewState": "AQIAAD8AAAAAAAAAAAA0wGwAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-24T16:33:00.811Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "VehicleServiceTest.cs",
+              "DocumentMoniker": "E:\\workSpace\\ParkingApi\\Parking\\Parking.Tests\\VehicleServiceTest.cs",
+              "RelativeDocumentMoniker": "Parking.Tests\\VehicleServiceTest.cs",
+              "ToolTip": "E:\\workSpace\\ParkingApi\\Parking\\Parking.Tests\\VehicleServiceTest.cs",
+              "RelativeToolTip": "Parking.Tests\\VehicleServiceTest.cs",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAAABcAAABDAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-24T16:41:58.964Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "TariffService.cs",
+              "DocumentMoniker": "E:\\workSpace\\ParkingApi\\Parking\\Services\\TariffService.cs",
+              "RelativeDocumentMoniker": "Services\\TariffService.cs",
+              "ToolTip": "E:\\workSpace\\ParkingApi\\Parking\\Services\\TariffService.cs",
+              "RelativeToolTip": "Services\\TariffService.cs",
+              "ViewState": "AQIAAA0AAAAAAAAAAAAIwB8AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-16T16:29:14.868Z",
+              "IsPinned": true
             },
             {
               "$type": "Bookmark",
@@ -183,6 +185,175 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "SpacesServiceTest.cs",
+              "DocumentMoniker": "E:\\workSpace\\ParkingApi\\Parking\\Parking.Tests\\SpacesServiceTest.cs",
+              "RelativeDocumentMoniker": "Parking.Tests\\SpacesServiceTest.cs",
+              "ToolTip": "E:\\workSpace\\ParkingApi\\Parking\\Parking.Tests\\SpacesServiceTest.cs",
+              "RelativeToolTip": "Parking.Tests\\SpacesServiceTest.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAFwAAABbAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-24T21:04:14.7Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "ITariffRepository.cs",
+              "DocumentMoniker": "E:\\workSpace\\ParkingApi\\Parking\\Repositories\\Interfaces\\ITariffRepository.cs",
+              "RelativeDocumentMoniker": "Repositories\\Interfaces\\ITariffRepository.cs",
+              "ToolTip": "E:\\workSpace\\ParkingApi\\Parking\\Repositories\\Interfaces\\ITariffRepository.cs",
+              "RelativeToolTip": "Repositories\\Interfaces\\ITariffRepository.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-24T16:38:29.12Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "EntryRequestDTO.cs",
+              "DocumentMoniker": "E:\\workSpace\\ParkingApi\\Parking\\DTOs\\EntryRequestDTO.cs",
+              "RelativeDocumentMoniker": "DTOs\\EntryRequestDTO.cs",
+              "ToolTip": "E:\\workSpace\\ParkingApi\\Parking\\DTOs\\EntryRequestDTO.cs",
+              "RelativeToolTip": "DTOs\\EntryRequestDTO.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-20T20:59:00.102Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "EntryDTO.cs",
+              "DocumentMoniker": "E:\\workSpace\\ParkingApi\\Parking\\DTOs\\EntryDTO.cs",
+              "RelativeDocumentMoniker": "DTOs\\EntryDTO.cs",
+              "ToolTip": "E:\\workSpace\\ParkingApi\\Parking\\DTOs\\EntryDTO.cs",
+              "RelativeToolTip": "DTOs\\EntryDTO.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-20T20:58:52.666Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "EntryExit.cs",
+              "DocumentMoniker": "E:\\workSpace\\ParkingApi\\Parking\\Models\\EntryExit.cs",
+              "RelativeDocumentMoniker": "Models\\EntryExit.cs",
+              "ToolTip": "E:\\workSpace\\ParkingApi\\Parking\\Models\\EntryExit.cs",
+              "RelativeToolTip": "Models\\EntryExit.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAxAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-20T20:42:42.627Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "IVehicleRepository.cs",
+              "DocumentMoniker": "E:\\workSpace\\ParkingApi\\Parking\\Repositories\\Interfaces\\IVehicleRepository.cs",
+              "RelativeDocumentMoniker": "Repositories\\Interfaces\\IVehicleRepository.cs",
+              "ToolTip": "E:\\workSpace\\ParkingApi\\Parking\\Repositories\\Interfaces\\IVehicleRepository.cs",
+              "RelativeToolTip": "Repositories\\Interfaces\\IVehicleRepository.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAcAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-20T20:36:49.441Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "IVehicleService.cs",
+              "DocumentMoniker": "E:\\workSpace\\ParkingApi\\Parking\\Services\\interfaces\\IVehicleService.cs",
+              "RelativeDocumentMoniker": "Services\\interfaces\\IVehicleService.cs",
+              "ToolTip": "E:\\workSpace\\ParkingApi\\Parking\\Services\\interfaces\\IVehicleService.cs",
+              "RelativeToolTip": "Services\\interfaces\\IVehicleService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-20T20:13:31.733Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "IEntryExitRepository.cs",
+              "DocumentMoniker": "E:\\workSpace\\ParkingApi\\Parking\\Repositories\\Interfaces\\IEntryExitRepository.cs",
+              "RelativeDocumentMoniker": "Repositories\\Interfaces\\IEntryExitRepository.cs",
+              "ToolTip": "E:\\workSpace\\ParkingApi\\Parking\\Repositories\\Interfaces\\IEntryExitRepository.cs",
+              "RelativeToolTip": "Repositories\\Interfaces\\IEntryExitRepository.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAIAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-20T15:36:51.565Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "Vehicle.cs",
+              "DocumentMoniker": "E:\\workSpace\\ParkingApi\\Parking\\Models\\Vehicle.cs",
+              "RelativeDocumentMoniker": "Models\\Vehicle.cs",
+              "ToolTip": "E:\\workSpace\\ParkingApi\\Parking\\Models\\Vehicle.cs",
+              "RelativeToolTip": "Models\\Vehicle.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-20T14:47:17.3Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "ExitDTO.cs",
+              "DocumentMoniker": "E:\\workSpace\\ParkingApi\\Parking\\DTOs\\ExitDTO.cs",
+              "RelativeDocumentMoniker": "DTOs\\ExitDTO.cs",
+              "ToolTip": "E:\\workSpace\\ParkingApi\\Parking\\DTOs\\ExitDTO.cs",
+              "RelativeToolTip": "DTOs\\ExitDTO.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-16T21:07:41.857Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "ISpaceService.cs",
+              "DocumentMoniker": "E:\\workSpace\\ParkingApi\\Parking\\Services\\interfaces\\ISpaceService.cs",
+              "RelativeDocumentMoniker": "Services\\interfaces\\ISpaceService.cs",
+              "ToolTip": "E:\\workSpace\\ParkingApi\\Parking\\Services\\interfaces\\ISpaceService.cs",
+              "RelativeToolTip": "Services\\interfaces\\ISpaceService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-16T16:44:59.006Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "SpaceService.cs",
+              "DocumentMoniker": "E:\\workSpace\\ParkingApi\\Parking\\Services\\SpaceService.cs",
+              "RelativeDocumentMoniker": "Services\\SpaceService.cs",
+              "ToolTip": "E:\\workSpace\\ParkingApi\\Parking\\Services\\SpaceService.cs",
+              "RelativeToolTip": "Services\\SpaceService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAD4AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-16T16:44:31.646Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "SpaceRepository.cs",
+              "DocumentMoniker": "E:\\workSpace\\ParkingApi\\Parking\\Repositories\\SpaceRepository.cs",
+              "RelativeDocumentMoniker": "Repositories\\SpaceRepository.cs",
+              "ToolTip": "E:\\workSpace\\ParkingApi\\Parking\\Repositories\\SpaceRepository.cs",
+              "RelativeToolTip": "Repositories\\SpaceRepository.cs",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAIwB4AAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-16T16:35:53.175Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "Space.cs",
+              "DocumentMoniker": "E:\\workSpace\\ParkingApi\\Parking\\Models\\Space.cs",
+              "RelativeDocumentMoniker": "Models\\Space.cs",
+              "ToolTip": "E:\\workSpace\\ParkingApi\\Parking\\Models\\Space.cs",
+              "RelativeToolTip": "Models\\Space.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-16T16:04:29.008Z"
             }
           ]
         }

@@ -24,6 +24,17 @@ namespace Parking.Repositories
             return await _context.Vehicles.FirstOrDefaultAsync(v => v.Id == id);
         }
 
+        public async Task<Vehicle?> GetVehicleByPlate(string plate)
+        {
+            return await _context.Vehicles.FirstOrDefaultAsync(v => v.NumberPlate == plate);
+        }
+
+        public async Task AddVehicleAsync(Vehicle vehicle)
+        {
+            await _context.Vehicles.AddAsync(vehicle);
+            await _context.SaveChangesAsync();
+        }
+
         public async Task DeleteAsync(Vehicle vehicle)
         {
             _context.Vehicles.Remove(vehicle);

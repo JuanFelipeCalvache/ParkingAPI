@@ -3,40 +3,38 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Parking.Data;
 using Parking.DTOs;
 using Parking.Models;
+using Parking.Repositories;
+using Parking.Repositories.Interfaces;
 using Parking.Services.interfaces;
 
 namespace Parking.Services
 {
     public class TariffService : ITariffService
     {
-        private readonly AppDbContext _context;
+        private readonly ITariffRepository _tariffRepo;
 
-        public TariffService(AppDbContext context)
+        public TariffService(ITariffRepository tariffRepo)
         {
-            _context = context;
+            _tariffRepo = tariffRepo;
         }
 
         public async Task<List<TariffDTO>> GetAllAsync()
         {
-            var tariffs = await _context.Tariffs
-                .Select(t => new TariffDTO
-                {
-                    VehicleType = t.VehicleType,
-                    RatePerHour = t.RatePerHour
-                })
-                .ToListAsync();
-            return tariffs;
+            var tariffs = await _tariffRepo.GetAllTariffs();
+
+            return tariffs.Select(t => new TariffDTO
+            {
+                VehicleType = t.VehicleType,
+                RatePerHour = t.RatePerHour
+            }).ToList();
         }
 
         public async Task<TariffDTO> GetTariffAsync(string vehicle)
         {
-            var tariff = await _context.Tariffs
-                .FirstOrDefaultAsync(t => t.VehicleType == vehicle);
+            var tariff = await _tariffRepo.GetTariffByVehicle(vehicle);
 
-            if (tariff == null)
-            {
-                return null;
-            }
+            if (tariff == null) return null;
+
 
             return new TariffDTO
             {
@@ -53,25 +51,20 @@ namespace Parking.Services
                 RatePerHour = tariffDTO.RatePerHour
             };
 
-            _context.Tariffs.Add(tariff);
-            await _context.SaveChangesAsync();
+            await _tariffRepo.AddTariffAsync(tariff);
 
         }
 
         public async Task<bool> UpdateTariffAsync(TariffDTO tariffDTO)
         {
-            var tariff = await _context.Tariffs.FirstOrDefaultAsync(t => t.Id == tariffDTO.id);
-
-            if (tariff == null)
-            {
-                return false;
-            }
+            var tariff = await _tariffRepo.GetTariffById(tariffDTO.id);
+            
+            if (tariff == null) return false;
 
             tariff.VehicleType = tariffDTO.VehicleType;
             tariff.RatePerHour = tariffDTO.RatePerHour;
 
-            _context.Tariffs.Update(tariff);
-            await _context.SaveChangesAsync();
+            await _tariffRepo.UpdateTariffAsync(tariff);
 
             return true;
 
@@ -80,15 +73,11 @@ namespace Parking.Services
 
         public async Task<bool> DeleteTariff(int id)
         {
-            var tariff = await _context.Tariffs.FirstOrDefaultAsync(t => t.Id == id);
+            var tariff = await _tariffRepo.GetTariffById(id);
 
-            if(tariff == null)
-            {
-                return false;
-            }
+            if(tariff == null) return false;
 
-            _context.Tariffs.Remove(tariff);
-            await _context.SaveChangesAsync();
+            await _tariffRepo.DeleteTariffAsync(tariff.Id);
 
             return true;
 

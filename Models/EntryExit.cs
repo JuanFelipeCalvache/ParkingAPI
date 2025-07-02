@@ -7,10 +7,10 @@
         public DateTime? ExitTime { get; set; }
 
         public int VehicleId { get; set; }
-        public Vehicle Vehicle { get; set; }
+        public Vehicle Vehicle { get; set; } = null!;
 
         public int? SpaceId { get; set; }
-        public Space Space { get; set; }
+        public Space Space { get; set; } = null!;
 
 
         public decimal? FeeToPaid { get; set; }

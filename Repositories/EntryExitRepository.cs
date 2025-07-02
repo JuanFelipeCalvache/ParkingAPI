@@ -47,7 +47,7 @@ namespace Parking.Repositories
         {
             return await _context.EntryExits
                 .Include(e => e.Vehicle)
-                .Include(e => e.SpaceId)
+                .Include(e => e.Space)
                 .Where(e => e.VehicleId == vehicleId)
                 .ToListAsync();
         }
@@ -57,15 +57,15 @@ namespace Parking.Repositories
             return await _context.EntryExits.FirstOrDefaultAsync(e => e.Id == id);
         }
 
-        public async Task<bool> DeleteAsync(int id)
+        public async Task DeleteAsync(int id)
         {
-            var entity = await _context.EntryExits.FirstOrDefaultAsync(e => e.Id == id);
-            if (entity == null) return false;
+            var entry = await _context.EntryExits.FirstOrDefaultAsync(e => e.Id == id);
+            if (entry != null)
+            {
+                _context.EntryExits.Remove(entry);
+                await _context.SaveChangesAsync();
+            };
 
-            _context.EntryExits.Remove(entity);
-            await _context.SaveChangesAsync();
-
-            return true;
         }
 
         public async Task AddAsync(EntryExit entryExit)

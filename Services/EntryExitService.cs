@@ -3,20 +3,27 @@ using Parking.DTOs;
 using Microsoft.EntityFrameworkCore;
 using Parking.Models;
 using Parking.Services.interfaces;
+using Parking.Repositories;
+using System.Diagnostics;
+using Parking.Repositories.Interfaces;
 
 namespace Parking.Services
 {
     public class EntryExitService : IEntryExitService
     {
-        private readonly AppDbContext _context;
-        private readonly IConfiguration _config;
+        private readonly IEntryExitRepository _entryExitRepo;
         private readonly ITariffService _tariffService;
+        private readonly ITariffRepository _tariffRepo;
+        private readonly IVehicleRepository _vehicleRepo;
+        private readonly ISpaceRepository _spaceRepo;
 
-        public EntryExitService(AppDbContext context, IConfiguration config, ITariffService tariffService)
+        public EntryExitService(IEntryExitRepository entryExitRepo, ITariffService tariffService, IVehicleRepository vehicleRepo, ISpaceRepository spaceRepo, ITariffRepository tariffRepo)
         {
-            _context = context;
-            _config = config;
+            _entryExitRepo = entryExitRepo;
             _tariffService = tariffService;
+            _tariffRepo = tariffRepo;
+            _vehicleRepo = vehicleRepo;
+            _spaceRepo = spaceRepo;
         }
 
 
@@ -25,25 +32,24 @@ namespace Parking.Services
             var normalizedPlate = vehicleDTO.Plate.Trim().ToUpper();
 
             //Does the Vehicle exist ?
-            var vehicle = await _context.Vehicles.FirstOrDefaultAsync(v => v.NumberPlate == normalizedPlate);
+            var vehicle = await _vehicleRepo.GetVehicleByPlate(normalizedPlate);
             if (vehicle == null)
             {
                 vehicle = new Vehicle
                 {
 
-                    NumberPlate = vehicleDTO.Plate.Trim().ToUpper(),
+                    NumberPlate = normalizedPlate,
                     Type = vehicleDTO.Type,
                     Owner = vehicleDTO.Owner
                 };
 
-                _context.Vehicles.Add(vehicle);
-                await _context.SaveChangesAsync();
+                await _vehicleRepo.AddVehicleAsync(vehicle);
+                
             }
 
-            var isAlreadyInside = await _context.EntryExits
-                .AnyAsync(e => e.VehicleId == vehicle.Id && e.ExitTime == null);
+            var activeEntry = await _entryExitRepo.GetActiveEntryByPlateAsync(normalizedPlate);
 
-            if(isAlreadyInside)
+            if(activeEntry != null)
             {
                 return new EntryExitResponseDTO
                 {
@@ -54,11 +60,12 @@ namespace Parking.Services
 
 
             //Is space empty
-            var space = await _context.Spaces.FirstOrDefaultAsync(s => s.Id == entryDTO.SpaceId && !s.IsOccupied);
-            if (space ==null)
+            var space = await _spaceRepo.GetAvailableSpaceByIdAsync(entryDTO.SpaceId);            
+            if (space == null)
             {
-                return new EntryExitResponseDTO { Success = false, Message = "Space is not available. " };
+                return new EntryExitResponseDTO { Success = false, Message = "Space is not available." };
             }
+
 
 
             var entryExit = new EntryExit
@@ -73,9 +80,9 @@ namespace Parking.Services
             space.IsOccupied = true;
             space.VehicleId = vehicle.Id;
 
-            _context.EntryExits.Add(entryExit);
-            _context.Spaces.Update(space);
-            await _context.SaveChangesAsync();
+            await _entryExitRepo.AddAsync(entryExit);
+            await _spaceRepo.UpdateSpaceAsync(space);
+            
 
             return new EntryExitResponseDTO
             {
@@ -92,20 +99,16 @@ namespace Parking.Services
         {
 
             // Buscar entrada activa (sin ExitTime) del vehículo
-            var entryExit = await _context.EntryExits
-                .Include(e => e.Vehicle)
-                .Where(e => e.Vehicle.NumberPlate == vehiclePlate && e.ExitTime == null)
-                .OrderByDescending(e => e.EntryTime)
-                .FirstOrDefaultAsync();
+            var activeEntry = await _entryExitRepo.GetActiveEntryByPlateAsync(vehiclePlate);
 
-            if (entryExit == null)
+            if (activeEntry == null)
             {
                 return new EntryExitResponseDTO { Success = false, Message = "Active entry not found for this vehicle." };
             }
 
             // Registrar salida
-            entryExit.ExitTime = exitDTO.ExitTime;
-
+            activeEntry.ExitTime = exitDTO.ExitTime;
+            
             var rate = exitDTO.TariffDTO?.RatePerHour ?? 0;
             if (rate <= 0)
             {
@@ -113,28 +116,30 @@ namespace Parking.Services
             }
 
             // Calcular tarifa
-            entryExit.FeeToPaid = _tariffService.CalculateFee(entryExit, rate);
+            activeEntry.FeeToPaid = _tariffService.CalculateFee(activeEntry, rate);
+
+            var space = await _spaceRepo.GetSpaceById(activeEntry.SpaceId.Value);
 
             // Liberar espacio
-            var space = await _context.Spaces.FirstOrDefaultAsync(s => s.Id == entryExit.SpaceId);
+                
             if (space != null)
             {
                 space.IsOccupied = false;
                 space.VehicleId = null;
-                _context.Spaces.Update(space);
+                await _spaceRepo.UpdateSpaceAsync(space);
             }
 
-            _context.EntryExits.Update(entryExit);
-            await _context.SaveChangesAsync();
+
+            await _entryExitRepo.UpdateAsync(activeEntry);
 
             return new EntryExitResponseDTO
             {
-                Id = entryExit.Id,
-                VehiclePlate = entryExit.Vehicle.NumberPlate,
+                Id = activeEntry.Id,
+                VehiclePlate = activeEntry.Vehicle.NumberPlate,
                 SpaceCode = space?.Id.ToString(),
-                EntryTime = entryExit.EntryTime,
-                ExitTime = entryExit.ExitTime,
-                AmountToPay = entryExit.FeeToPaid ?? 0,
+                EntryTime = activeEntry.EntryTime,
+                ExitTime = activeEntry.ExitTime,
+                AmountToPay = activeEntry.FeeToPaid ?? 0,
                 Success = true
             };
         }
@@ -143,12 +148,9 @@ namespace Parking.Services
 
         public async Task<List<EntryExitResponseDTO>> GetAllEntriesExitsAsync()
         {
-            var entriesExits = await _context.EntryExits
-                .Include(e => e.Vehicle)
-                .Include(e => e.Space)
-                .ToListAsync();
+            var entriesExits =  await _entryExitRepo.GetAllAsync();
 
-            var tariff = await _context.Tariffs.FirstOrDefaultAsync();
+            var tariff = (await _tariffRepo.GetAllTariffs())?.FirstOrDefault();
 
             if (tariff == null)
             {
@@ -157,7 +159,6 @@ namespace Parking.Services
                     new EntryExitResponseDTO {Success = false, Message = "Tariff configuration not found"}
                 };
             }
-
 
             var responseTask =  entriesExits.Select(entryExit =>
             {
@@ -194,14 +195,9 @@ namespace Parking.Services
 
         public async Task<List<EntryExitResponseDTO>> GetEntrysInParking() {
 
-            var vehiclesInParking = await _context.EntryExits
-                .Include(v => v.Vehicle)
-                .Include(v => v.Space)
-                .Where(v => v.ExitTime == null)
-                .ToListAsync();
+            var vehiclesInParking = await _entryExitRepo.GetAllActiveAsync();
 
-
-            var tariff = await _context.Tariffs.FirstOrDefaultAsync();
+            var tariff = (await _tariffRepo.GetAllTariffs())?.FirstOrDefault();
 
             if (tariff == null)
             {
@@ -233,12 +229,8 @@ namespace Parking.Services
 
         public async Task<List<EntryExitResponseDTO>> GetEntriesExitsByVehicleAsync(int vehicleId)
         {
-            var entriesExits = await _context.EntryExits
-                .Where(e => e.VehicleId == vehicleId)
-                .Include(e => e.Vehicle)
-                .Include(e => e.Space)
-                .ToListAsync();
-
+            var entriesExits = await _entryExitRepo.GetByVehicleIdAsync(vehicleId);
+            
             return entriesExits.Select(entryExit => new EntryExitResponseDTO
             {
                 Id = entryExit.Id,
@@ -252,15 +244,11 @@ namespace Parking.Services
 
         public async Task<bool> DeleteEntryExitAsync(int id)
         {
-            var record = await _context.EntryExits.FirstOrDefaultAsync(e => e.Id == id);
+            var record = await _entryExitRepo.GetByIdAsync(id);
 
-            if(record == null)
-            {
-                return false;
-            }
+            if(record == null) return false;
 
-            _context.EntryExits.Remove(record);
-            await _context.SaveChangesAsync();
+            await _entryExitRepo.DeleteAsync(record.Id);
 
             return true;
         }

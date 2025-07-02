@@ -1,254 +1,323 @@
-﻿using Xunit;
-using Moq;
-using Microsoft.Extensions.Configuration;
-using Microsoft.EntityFrameworkCore;
+﻿using Moq;
+using Xunit;
 using Parking.Services;
-using Parking.Data;
-using Parking.DTOs;
+using Parking.Repositories;
+using Parking.Repositories.Interfaces;
+using Parking.Services.interfaces;
 using Parking.Models;
+using Parking.DTOs;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System;
-using Parking.Services.interfaces;
 
 namespace Parking.Parking.Tests
 {
     public class EntryExitServiceTest
     {
-        private AppDbContext GetInMemoryDbContext()
-        {
-            var options = new DbContextOptionsBuilder<AppDbContext>()
-                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
-                .Options;
-            return new AppDbContext(options);
-        }
+        private readonly Mock<IEntryExitRepository> _mockEntryExitRepo = new();
+        private readonly Mock<ITariffService> _mockTariffService = new();
+        private readonly Mock<IVehicleRepository> _mockVehicleRepo = new();
+        private readonly Mock<ISpaceRepository> _mockSpaceRepo = new();
+        private readonly Mock<ITariffRepository> _mockTariffRepo = new();
 
-        private IConfiguration GetFakeConfiguration()
+        private EntryExitService _service;
+
+        public EntryExitServiceTest()
         {
-            var settings = new Dictionary<string, string> { { "SomeKey", "SomeValue" } };
-            return new ConfigurationBuilder().AddInMemoryCollection(settings).Build();
+            _service = new EntryExitService(
+                _mockEntryExitRepo.Object,
+                _mockTariffService.Object,
+                _mockVehicleRepo.Object,
+                _mockSpaceRepo.Object,
+                _mockTariffRepo.Object
+                );
         }
 
         [Fact]
-        public async Task RegisterEntryAsync_Should_Add_Entry_When_Vehicle_Not_Exists_And_Space_Is_Free()
+        public async Task RegisterEntryAsync_VehicleAlreadyInside_ReturnsError()
         {
-            //arrange
-            var dbContext = GetInMemoryDbContext();
+            //Arrange
+            var entryDTO = new EntryDTO { SpaceId = 1 };
+            var vehicleDTO = new VehicleDTO { Plate = "ABC123", Type = "Carro", Owner = "Jose" };
 
-            var mockTariffService = new Mock<ITariffService>();
-            var config = GetFakeConfiguration();
-
-            //agregar espacio disponible
-            var space = new Space { Id = 1, IsOccupied = false };
-            dbContext.Add(space);
-            await dbContext.SaveChangesAsync();
-
-            var service = new EntryExitService(dbContext, config, mockTariffService.Object);
-
-            var vehicleDTO = new VehicleDTO
-            {
-                Plate = "ABC123",
-                Type = "Carro",
-                Owner = "Juan Pérez"
-            };
-
-            var entryDTO = new EntryDTO
-            {
-                SpaceId = 1
-            };
+            _mockVehicleRepo.Setup(v => v.GetVehicleByPlate("ABC123")).ReturnsAsync(new Vehicle { Id = 1, NumberPlate = "ABC123" });
+            _mockEntryExitRepo.Setup(r => r.GetActiveEntryByPlateAsync("ABC123")).ReturnsAsync(new EntryExit { Id = 1 });
 
             //Act
-            var result = await service.RegisterEntryAsync(entryDTO, vehicleDTO);
+            var result = await _service.RegisterEntryAsync(entryDTO, vehicleDTO);
 
             //Assert
-            Assert.True(result.Success);
-            Assert.Equal("ABC123", result.VehiclePlate);
-            Assert.Equal("1", result.SpaceCode);
+            Assert.False(result.Success);
+            Assert.Equal("The vehicle is already inside the parking lot", result.Message);
 
-            //Confirmar que el espacio quedo ocupado
-            var updateSpcae = await dbContext.Spaces.FirstAsync(s => s.Id == 1);
-            Assert.True(updateSpcae.IsOccupied);
+        }
+        [Fact]
+        public async Task RegisterEntryAsync_NewVehicle_AdEntrySuccessfully()
+        {
+            // Arrange
+            var entryDTO = new EntryDTO { SpaceId = 1 };
+            var vehicleDTO = new VehicleDTO { Plate = " xyz789 ", Type = "Carro", Owner = "Pipe" };
+            var normalizedPlate = vehicleDTO.Plate.Trim().ToUpper();
 
+            _mockEntryExitRepo.Setup(r => r.GetActiveEntryByPlateAsync(normalizedPlate)).ReturnsAsync((EntryExit)null);
+            _mockVehicleRepo.Setup(v => v.GetVehicleByPlate(normalizedPlate)).ReturnsAsync((Vehicle)null);
+            _mockSpaceRepo.Setup(s => s.GetAvailableSpaceByIdAsync(1)).ReturnsAsync(new Space { Id = 1, IsOccupied = false });
+            _mockTariffRepo.Setup(t => t.GetTariffByVehicle("Carro")).ReturnsAsync(new Tariff { Id = 1, RatePerHour = 2000, VehicleType = "Carro" });
+            _mockTariffService.Setup(t => t.CalculateFee(It.IsAny<EntryExit>(), It.IsAny<decimal>())).Returns(2000);
+
+            _mockVehicleRepo.Setup(v => v.AddVehicleAsync(It.IsAny<Vehicle>())).Returns(Task.CompletedTask);
+            _mockEntryExitRepo.Setup(e => e.AddAsync(It.IsAny<EntryExit>())).Returns(Task.CompletedTask);
+            _mockSpaceRepo.Setup(s => s.UpdateSpaceAsync(It.IsAny<Space>())).Returns(Task.CompletedTask);
+
+            // Act
+            var result = await _service.RegisterEntryAsync(entryDTO, vehicleDTO);
+
+            // Assert
+            Assert.True(result.Success, $"Expected success, but got: {result.Message}");
+            Assert.Equal("XYZ789", result.VehiclePlate);
+        }
+
+        [Fact]
+        public async Task GetAllEntriesExits_ReturnsMappedEntriExitDTO()
+        {
+            //Arrange
+            var entryTime = DateTime.Now.AddHours(-2);
+            var vehicle = new Vehicle { Id = 1, NumberPlate = "ABC123", Type = "Carro", Owner = "Jose" };
+            var space = new Space { Id = 1 };
+
+            var entries = new List<EntryExit>
+            {
+                new EntryExit { Id = 1,EntryTime = entryTime, ExitTime = null, Vehicle = vehicle, Space = space }
+            };
+
+            var tariff = new Tariff { Id = 1, RatePerHour = 10, VehicleType = "carro" };
+
+
+            _mockEntryExitRepo.Setup(r => r.GetAllAsync()).ReturnsAsync(entries);
+            _mockTariffRepo.Setup(r => r.GetAllTariffs()).ReturnsAsync(new List<Tariff> { tariff });
+            _mockTariffService.Setup(s => s.CalculateFee(It.IsAny<EntryExit>(), 10)).Returns(20);
+
+            //Act
+            var result = await _service.GetAllEntriesExitsAsync();
+
+            //Assert
+            Assert.Single(result);
+            var dto = result[0];
+            Assert.True(dto.Success);
+            Assert.Equal("ABC123", dto.VehiclePlate);
+            Assert.Equal("1", dto.SpaceCode);
+            Assert.Equal(20, dto.AmountToPay);
+            Assert.Equal(entryTime, dto.EntryTime);
+            Assert.Null(dto.ExitTime);
 
         }
 
         [Fact]
-        public async Task RegisterExitByPlateAsync_ShouldRegisterExitAndCalculateFee()
+        public async Task RegisterEntryAsync_SpaceUnavailable_ReturnsError()
         {
-            // Arrange
-            var plate = "XYZ789";
-            var vehicle = new Vehicle { NumberPlate = plate, Type = "Car", Owner = "Alice" };
+            var entryDTO = new EntryDTO { SpaceId = 2};
+            var vehicleDTO = new VehicleDTO { Plate = "ABC123", Type = "Moto", Owner = " Jese" };
+
+            _mockVehicleRepo.Setup(r => r.GetVehicleByPlate("ABC123")).ReturnsAsync((Vehicle)null);
+            _mockEntryExitRepo.Setup(r => r.GetActiveEntryByPlateAsync("ABC123")).ReturnsAsync((EntryExit)null);
+            _mockSpaceRepo.Setup(s => s.GetSpaceById(2)).ReturnsAsync((Space)null);
+
+            //Act
+            var result = await _service.RegisterEntryAsync(entryDTO, vehicleDTO);
+
+            //Assert
+            Assert.False(result.Success);
+            Assert.Equal("Space is not available.", result.Message);
+
+        }
+
+        [Fact]
+        public async Task GetAllEntriesExitsAsync_NoTariff_ReturnsError()
+        {
+            //Arrange
+            _mockEntryExitRepo.Setup(e => e.GetAllAsync()).ReturnsAsync(new List<EntryExit>());
+            _mockTariffRepo.Setup(r => r.GetAllTariffs()).ReturnsAsync((List<Tariff>)null);
+
+            //Act
+            var result = await _service.GetAllEntriesExitsAsync();
+
+            Assert.Single(result);
+            Assert.False(result[0].Success);
+            Assert.Equal("Tariff configuration not found", result[0].Message);
+
+        }
+
+        [Fact]
+        public async Task DeleteEntryExitAsync_RecordNotFound_ReturnsFalse()
+        {
+            //Arrange
+            _mockEntryExitRepo.Setup(r => r.GetByIdAsync(1)).ReturnsAsync((EntryExit)null);
+
+            //Act
+            var result = await _service.DeleteEntryExitAsync(1);
+
+            //Assert
+            Assert.False(result);
+        }
+
+        [Fact]
+        public async Task RegisterExitByPlateAsync_ShouldReturnSuccess_WhenExitIsRegisteredCorrectly()
+        {
+            var plate = "ABC123";
+            var exitTime = DateTime.Now;
+            var rate = 5m;
+
+            var vehicle = new Vehicle { Id = 1, NumberPlate = plate };
             var space = new Space { Id = 1, IsOccupied = true, VehicleId = 1 };
-
-            var exitTime = DateTime.UtcNow;
-            var entryTime = DateTime.UtcNow.AddHours(-2);
-
-            var context = GetInMemoryDbContext();
-            context.Vehicles.Add(vehicle);
-            context.Spaces.Add(space);
-
-            var entry = new EntryExit
+            var activeEntry = new EntryExit
             {
                 Id = 1,
-                EntryTime = entryTime,
-                VehicleId = vehicle.Id,
                 Vehicle = vehicle,
-                SpaceId = space.Id,
-                Space = space
+                VehicleId = 1,
+                SpaceId = 1,
+                EntryTime = DateTime.Now.AddHours(-2), // 2 horas dentro
+                ExitTime = null,
+                FeeToPaid = null
             };
 
-            context.EntryExits.Add(entry);
-            await context.SaveChangesAsync();
-
-            var tariffServiceMock = new Mock<ITariffService>();
-            tariffServiceMock
-                .Setup(x => x.GetTariffAsync(It.IsAny<string>()))
-                .ReturnsAsync(new TariffDTO { RatePerHour = 5, VehicleType = "Carro" });
-
-            tariffServiceMock
-                .Setup(x => x.CalculateFee(It.IsAny<EntryExit>(), It.IsAny<decimal>()))
-                .Returns<EntryExit, decimal>((e, rate) =>
-                {
-                    var hours = (decimal)Math.Ceiling((e.ExitTime.Value - e.EntryTime).TotalHours);
-                    return hours * rate;
-                });
-
-            var configMock = new Mock<IConfiguration>();
-            var service = new EntryExitService(context, configMock.Object, tariffServiceMock.Object);
-
-            var exitDto = new ExitDTO
+            var exitDTO = new ExitDTO
             {
                 ExitTime = exitTime,
-                TariffDTO = new TariffDTO { VehicleType = "Carro", RatePerHour = 5 }
+                TariffDTO = new TariffDTO { RatePerHour = rate }
             };
 
+
+            _mockEntryExitRepo.Setup(repo => repo.GetActiveEntryByPlateAsync(plate))
+                .ReturnsAsync(activeEntry);
+            _mockSpaceRepo.Setup(repo => repo.GetSpaceById(1))
+                .ReturnsAsync(space);
+            _mockTariffService.Setup(service => service.CalculateFee(It.IsAny<EntryExit>(), rate))
+                .Returns(10m); // por ejemplo, 2 horas x $5/h
+
+
             // Act
-            var result = await service.RegisterExitByPlateAsync(plate, exitDto);
+            var result = await _service.RegisterExitByPlateAsync(plate, exitDTO);
 
             // Assert
             Assert.True(result.Success);
-            Assert.Equal(10, result.AmountToPay); 
+            Assert.Equal(1, result.Id);
+            Assert.Equal(plate, result.VehiclePlate);
+            Assert.Equal("1", result.SpaceCode);
+            Assert.Equal(10m, result.AmountToPay);
             Assert.Equal(exitTime, result.ExitTime);
-            Assert.Equal("XYZ789", vehicle.NumberPlate);
-            Assert.False(context.Spaces.First().IsOccupied);
+
+            // Verifica que se hayan llamado los métodos esperados
+            _mockSpaceRepo.Verify(r => r.UpdateSpaceAsync(It.Is<Space>(s => s.IsOccupied == false && s.VehicleId == null)), Times.Once);
+            _mockEntryExitRepo.Verify(r => r.UpdateAsync(It.Is<EntryExit>(e => e.FeeToPaid == 10m && e.ExitTime == exitTime)), Times.Once);
         }
 
         [Fact]
-        public async Task GetAllEntriesExitsAsync_ShouldReturn_ValidResponse()
+        public async Task RegisterExitByPlate_ActiveEntryNotFound_ReturnsError()
         {
-            // Arrange
-            var context = GetInMemoryDbContext();
-            var mockTariffService = new Mock<ITariffService>();
-            var config = GetFakeConfiguration();
-
-            // Agregar Tarifa
-            var tariff = new Tariff { Id = 1, RatePerHour = 5, VehicleType = "Carro" };
-
-            await context.Tariffs.AddAsync(tariff);
-
-            // Agregar Vehículo y Espacio
-            var vehicle = new Vehicle { Id = 1, Type = "Carro", NumberPlate = "ABC123", Owner = "Jose" };
-            var space = new Space { Id = 1, IsOccupied = true };
-
-            await context.Vehicles.AddAsync(vehicle);
-            await context.Spaces.AddAsync(space);
-            await context.SaveChangesAsync(); // ¡IMPORTANTE!
-
-            // Agregar Entrada/Salida
-            var entryExit = new EntryExit
+            //Arrange
+            var plate = "ABC123";
+            var exitDTO = new ExitDTO
             {
-                Id = 1,
-                EntryTime = DateTime.UtcNow.AddHours(-2),
-                ExitTime = DateTime.UtcNow,
-                VehicleId = vehicle.Id,
-                SpaceId = space.Id,
-                FeeToPaid = 10
-            };
-            await context.EntryExits.AddAsync(entryExit);
-            await context.SaveChangesAsync();
-
-            // Servicio
-            var service = new EntryExitService(context, config, mockTariffService.Object);
-
-            // Act
-            var result = await service.GetAllEntriesExitsAsync();
-
-            // Assert
-            Assert.NotNull(result);
-            Assert.Single(result);
-            Assert.True(result[0].Success);
-            Assert.Equal("ABC123", result[0].VehiclePlate);
-            Assert.Equal("1", result[0].SpaceCode);
-            Assert.Equal(10, result[0].AmountToPay);
-        }
-
-
-        [Fact]
-        public async Task GetEntrysInParking_ReturnsOnlyActiveEntries()
-        {
-            //arrange
-            var context = GetInMemoryDbContext();
-            var mockTariffSerice = new Mock<ITariffService>();
-            var config = GetFakeConfiguration();
-
-            var tariff = new Tariff { Id = 1, RatePerHour = 5, VehicleType = "Carro" };
-            await context.Tariffs.AddAsync(tariff);
-
-            var vehicleOne = new Vehicle { Id = 1, NumberPlate = "ABC123", Type = "Carro", Owner = "Juan" };
-            var vehicleTwo = new Vehicle { Id = 2, NumberPlate = "AYZ123", Type = "Carro", Owner = "JOSE" };
-
-            var space = new Space { Id = 1, IsOccupied = true, VehicleId = 1 };
-            var spaceTwo = new Space { Id = 2, IsOccupied = true, VehicleId = 2 };
-
-            await context.Vehicles.AddAsync(vehicleOne);
-            await context.Vehicles.AddAsync(vehicleTwo);
-            await context.Spaces.AddAsync(space);
-            await context.Spaces.AddAsync(spaceTwo);
-
-            await context.SaveChangesAsync();
-
-            var activeEntry = new EntryExit 
-            { 
-                Id = 1, 
-                EntryTime = DateTime.UtcNow.AddHours(-1), 
-                ExitTime = null, 
-                VehicleId = 1, 
-                SpaceId = 1, 
-                FeeToPaid = 0
+                ExitTime = DateTime.Now,
+                TariffDTO = new TariffDTO { RatePerHour = 10}
             };
 
-            var ExitEntry = new EntryExit
-            {
-                Id = 2,
-                EntryTime = DateTime.UtcNow.AddHours(-3),
-                ExitTime = DateTime.UtcNow.AddHours(-2),
-                VehicleId = 2,
-                SpaceId = 2,
-                FeeToPaid = 0
-            };
+            _mockEntryExitRepo.Setup(r => r.GetActiveEntryByPlateAsync(plate)).ReturnsAsync((EntryExit)null);
 
-            await context.EntryExits.AddAsync(activeEntry);
-            await context.EntryExits.AddAsync(ExitEntry);
-
-            await context.SaveChangesAsync();
-
-
-            //Servicio
-            var service = new EntryExitService(context, config, mockTariffSerice.Object);
-
-            //act
-            var result = await service.GetEntrysInParking();
+            //Act
+            var result = await _service.RegisterExitByPlateAsync(plate, exitDTO);
 
             //Assert
-            var entry = result.First();
-            Assert.NotNull(result);
+            Assert.False(result.Success);
+            Assert.Equal("Active entry not found for this vehicle.", result.Message);
+
+        }
+
+        [Fact]
+        public async Task RegisterExitByPlate_InvalidTariff_ReturnsError()
+        {
+            //Arrange
+            var vehicle = new Vehicle { Id = 1, NumberPlate = "ADG12C", Type = "Moto", Owner = "Jose" };
+            var space = new Space { Id = 1, IsOccupied = true, VehicleId = 1 };
+
+            var activeEntry = new EntryExit
+            {
+                Id = 1,
+                Vehicle = vehicle,
+                VehicleId = 1,
+                SpaceId = 1,
+                EntryTime = DateTime.Now.AddHours(-2)
+            };
+
+            var exitDTO = new ExitDTO
+            {
+                ExitTime = DateTime.Now,
+                TariffDTO = new TariffDTO { RatePerHour = 0 }
+            };
+
+            _mockEntryExitRepo.Setup(r => r.GetActiveEntryByPlateAsync(vehicle.NumberPlate)).ReturnsAsync(activeEntry);
+
+            //Act
+
+            var result = await _service.RegisterExitByPlateAsync(vehicle.NumberPlate, exitDTO);
+
+            //Assert
+            Assert.False(result.Success);
+            Assert.Equal("Invalid or missing tariff information.", result.Message);
+
+
+        }
+
+        [Fact]
+        public async Task RegisterExitByPlate_NoTariff_ReturnsErrorMessage()
+        {
+            //Arrange
+            _mockEntryExitRepo.Setup(r => r.GetAllActiveAsync()).ReturnsAsync(new List<EntryExit>());
+            _mockTariffRepo.Setup(t => t.GetAllTariffs()).ReturnsAsync(new List<Tariff>());
+
+            //Act
+            var result = await _service.GetEntrysInParking();
+
+            //Assert
             Assert.Single(result);
-            Assert.Null(result.First().ExitTime);
-            Assert.Equal("ABC123", result.First().VehiclePlate);
-            Assert.Equal("1", entry.SpaceCode);
-            Assert.InRange(entry.EntryTime, DateTime.UtcNow.AddHours(-1.1), DateTime.UtcNow.AddMinutes(-59));
+            Assert.False(result[0].Success);
+            Assert.Equal("Tariff configuration not found", result[0].Message);
+        }
 
+        [Fact]
+        public async Task RegisterEntryAsync_ExistingVehicle_AddEntryCorrectly()
+        {
+            var entryDTO = new EntryDTO { SpaceId = 1 };
+            var vehicleDTO = new VehicleDTO { Plate = "JDK123", Type = "Carro", Owner = "Maria" };
+            var normalizedPlate = vehicleDTO.Plate.Trim().ToUpper();
+            var vehicle = new Vehicle { Id = 2, NumberPlate = normalizedPlate, Type = "Carro", Owner = "Maria" };
 
+            _mockVehicleRepo.Setup(v => v.GetVehicleByPlate(normalizedPlate)).ReturnsAsync(vehicle);
+            _mockEntryExitRepo.Setup(r => r.GetActiveEntryByPlateAsync(normalizedPlate)).ReturnsAsync((EntryExit?)null);
+            _mockSpaceRepo.Setup(s => s.GetAvailableSpaceByIdAsync(entryDTO.SpaceId)).ReturnsAsync(new Space { Id = 1, IsOccupied = false });
+            _mockEntryExitRepo.Setup(e => e.AddAsync(It.IsAny<EntryExit>())).Returns(Task.CompletedTask);
+            _mockSpaceRepo.Setup(s => s.UpdateSpaceAsync(It.IsAny<Space>())).Returns(Task.CompletedTask);
+
+            //Act
+            var result = await _service.RegisterEntryAsync(entryDTO, vehicleDTO);
+
+            // Assert
+            Assert.True(result.Success);
+            Assert.Equal(normalizedPlate, result.VehiclePlate);
+
+        }
+
+        [Fact]
+        public async Task DeleteEntryExitAsync_RecordExists_ReturnsTrue()
+        {
+            var entry = new EntryExit { Id = 1 };
+
+            _mockEntryExitRepo.Setup(r => r.GetByIdAsync(1)).ReturnsAsync(entry);
+            _mockEntryExitRepo.Setup(r => r.DeleteAsync(1)).Returns(Task.CompletedTask);
+
+            var result = await _service.DeleteEntryExitAsync(1);
+
+            Assert.True(result);
         }
 
 

@@ -1,98 +1,104 @@
 ﻿using Xunit;
 using Parking.Services;
 using Parking.Models;
-using Parking.DTOs;
-using Parking.Data;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Linq;
+using Parking.Repositories.Interfaces;
+using Moq;
 
 
 namespace Parking.Parking.Tests
 {
     public class VehicleServiceTest
-
-
     {
-        private AppDbContext GetInMemoryDbContext()
-        {
-            var options = new DbContextOptionsBuilder<AppDbContext>()
-                .UseInMemoryDatabase(databaseName: "TestDb_" + System.Guid.NewGuid())
-                .Options;
+        private readonly Mock<IVehicleRepository> _mockVehicleRepo = new();
 
-            return new AppDbContext(options);
+        private VehicleService _service;
+
+        public VehicleServiceTest()
+        {
+            _service = new VehicleService(_mockVehicleRepo.Object);
         }
 
-        private IConfiguration GetFakeConfiguration()
+
+        [Fact]
+
+        public async Task GetAllVehicles_ReturnsMappedVehicleDTOs()
         {
-            var inMemorySettings = new Dictionary<string, string>
+            //Arrange
+            var vehicles = new List<Vehicle>
             {
-                {"SomeKey", "SomeValue" }
+                new Vehicle { Id = 1, NumberPlate = "ABC123", Type = "Carro", Owner = "Jose"},
+                new Vehicle { Id = 2, NumberPlate = "JDC123", Type = "Carro", Owner = "Maria"},
             };
 
-            return new ConfigurationBuilder()
-                .AddInMemoryCollection(inMemorySettings)
-                .Build();
-        }
-
-        [Fact]
-        public async Task GetAllVehiclesAsync_ReturnsVehicles()
-        {
-            //arrange
-            var context = GetInMemoryDbContext();
-            context.Vehicles.Add(new Vehicle { Id = 1, NumberPlate = "ABC123", Type = "Car", Owner = "Juan" });
-            context.Vehicles.Add(new Vehicle { Id = 2, NumberPlate = "JDK123", Type = "Moto", Owner = "Ana" });
-            await context.SaveChangesAsync();
-
-            var service = new VehicleService(context, GetFakeConfiguration());
+            _mockVehicleRepo.Setup(v => v.GetAllVehiclesAsync()).ReturnsAsync(vehicles);
 
             //Act
-            var result = await service.GetAllVehiclesAsync();
+            var result = await _service.GetAllVehiclesAsync();
 
-            //Assert 
+            //Assert
             Assert.Equal(2, result.Count);
-            Assert.Contains(result, v => v.Plate == "JDK123" && v.Owner == "Ana" && v.Type == "Moto");
-            Assert.Contains(result, v => v.Plate == "ABC123");
+            Assert.Equal("ABC123", result[0].Plate);
+            Assert.Equal("JDC123", result[1].Plate);
+
         }
 
 
         [Fact]
-        public async Task DeleteVehicleAsync_RemovesVehicle_WhenExists()
-        {
-            //arrange 
-            var context = GetInMemoryDbContext();
-            context.Vehicles.Add(new Vehicle { Id = 1, NumberPlate = "DELETE1", Type = "Car", Owner = "Luis" });
-            await context.SaveChangesAsync();
 
-            var service = new VehicleService(context, GetFakeConfiguration());
+        public async Task GetAllVehiclesAsync_NoVehicles_ReturnsEmptyList()
+        {
+            _mockVehicleRepo.Setup(v => v.GetAllVehiclesAsync()).ReturnsAsync(new List<Vehicle>());
 
             //Act
-            var result = await service.DeleteVehicleAsync(1);
+            var result = await _service.GetAllVehiclesAsync();
+
+            //Assert
+            Assert.NotNull(result);
+            Assert.Empty(result);
+            
+            
+
+        }
+
+        [Fact]
+        public async Task DeleteVehicleAsync_VehicleExists_ReturnTrue()
+        {
+            //Arrange
+            var vehicle = new Vehicle { Id = 1, NumberPlate = "ABC123", Type = "Car", Owner = "Maria" };
+
+            _mockVehicleRepo.Setup(v => v.GetByIdAsync(1)).ReturnsAsync(vehicle);
+            _mockVehicleRepo.Setup(v => v.DeleteAsync(vehicle)).Returns(Task.CompletedTask);
+
+            //Act
+            var result = await _service.DeleteVehicleAsync(1);
+
 
             //Assert
             Assert.True(result);
-            Assert.Null(await context.Vehicles.FindAsync(1));
-            Assert.Empty(context.Vehicles);
-        }
 
+        }
 
         [Fact]
-        public async Task DeleteVehicleAsync_ReturnsFalse_WhenNotFound()
+        public async Task DeleteVehicle_VehicleNotFound_ReturnsFalse()
         {
-            // Arrange
-            var context = GetInMemoryDbContext();
-            var service = new VehicleService(context, GetFakeConfiguration());
+            //Arrange
+            _mockVehicleRepo.Setup(v => v.GetByIdAsync(1)).ReturnsAsync((Vehicle)null);
 
-            // Act
-            var result = await service.DeleteVehicleAsync(999);
+            //Act
+            var result = await _service.DeleteVehicleAsync(1);
 
-            // Assert
+            //Assert
             Assert.False(result);
+
+
         }
+
+
+
+
 
 
     }
 }
+
 

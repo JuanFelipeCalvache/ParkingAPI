@@ -1,4 +1,5 @@
 ﻿using Parking.DTOs;
+using Parking.Models;
 using Parking.Repositories.Interfaces;
 using Parking.Services.interfaces;
 
@@ -19,7 +20,7 @@ namespace Parking.Services
         public async Task<List<VehicleDTO>> GetAllVehiclesAsync()
         {
             var vehicles = await _vehicleRepository.GetAllVehiclesAsync();
-
+            
             return vehicles.Select(v => new VehicleDTO
             {
                 Id = v.Id,

@@ -7,6 +7,7 @@ using Parking.Data;
 using Parking.Services;
 using Parking.Services.interfaces;
 using Parking.Repositories.Interfaces;
+using Parking.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -62,9 +63,10 @@ builder.Services.AddScoped<IVehicleService, VehicleService>();
 
 
 //Add repositories
-builder.Services.AddScoped<IVehicleRepository, IVehicleRepository>();
-builder.Services.AddScoped<ISpaceRepository, ISpaceRepository>();
-builder.Services.AddScoped<ITariffRepository, ITariffRepository>();
+builder.Services.AddScoped<IVehicleRepository, VehicleRepository>();
+builder.Services.AddScoped<ISpaceRepository, SpaceRepository>();
+builder.Services.AddScoped<ITariffRepository, TariffRepository>();
+builder.Services.AddScoped<IEntryExitRepository, EntryExitRepository>();
 
 
 //Add controllers 
